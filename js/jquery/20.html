@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<p>我是P标签</p>
+<span>我是span标签</span>
+<div><strong>我是div标签</strong>1111111</div>
+<em>我是em标签</em>
+<script>
+	// $('p').remove();
+	// $('span').empty();
+	// $('strong').unwrap();
+
+	$('p').click(function(){
+		alert('点击了');
+	});
+	var cb = $('p').clone(true);
+	$('body').append(cb);
+
+</script>
+</body>
+</html>

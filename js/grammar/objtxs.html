@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+//javascript对象操作的具体讲解
+var user=new Object();
+/*
+1．添加属性
+这时user 对象没有任何属性和方法，显然没有任何用途。但可以为它动态的添加属性
+和方法，例如：
+*/
+user.name="jack";
+user.age=21;
+user.sex="male";
+//通过上述语句，user 对象便具有了三个属性：name、age和sex。下面输出这三个语句：
+alert(user.name);
+alert(user.age);
+alert(user.sex);
+//由代码运行效果可知，三个属性已经完全属于user 对象了。
+/*
+2．添加方法
+添加方法的过程和属性类似：
+*/
+user.alert=function(){
+alert("my name is:"+this.name);
+}
+
+//这就为user 对象添加了一个方法"alert"，通过执行它，可以弹出一个对话框显示自己的名字介绍：
+
+user.alert();
+//3．修改属性:修改一个属性的过程就是用新的属性替换旧的属性，例如：
+
+user.name="tom";
+user.alert=function(){
+alert("hello,"+this.name);
+}
+//这样就修改了user 对象name属性的值和alert方法，它从显示"my name is"变为了显示"hello"。
+/*
+4．删除属性
+删除一个属性的过程也很简单，就是将其置为undefined：
+*/
+user.name=undefined;
+user.alert=undefined;
+
+console.log(user);
+/*
+这样就删除了name属性和alert方法。在之后的代码中，这些属性变的不可用。
+在添加、修改或者删除属性时，和引用属性相同，也可以采用方括号（[]）语法：
+*/
+user["name"]="tom";
+/*
+使用这种方式还有一个额外的特点，就是可以使用非标识符字符串作为属性名称，例如
+标识符中不允许以数字开头或者出现空格，但在方括号（[]）语法中却可以使用：
+*/
+user["my name"]="tom";
+
+//需要注意，在使用这种非标识符作为名称的属性时，仍然要用方括号语法来引用：
+alert(user["my name"]);
+/*
+而不能写为：
+alert(user.my name);
+利用对象的这种性质，甚至可以很容易实现一个简单的哈希表，在本书的后面将会看到
+其应用。此可见，JavaScript中的每个对象都是动态可变的，这给编程带来了很大的灵活性，
+也和其他语言产生了很大的区别，读者可以体会这种性质。
+*/
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

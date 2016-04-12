@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+	.hide{display: none;/*opacity: 0;visibility: hidden;*/}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<p title="js" myattr="my">javascript是一种由Netscape的<strong>LiveScript</strong>发展而来的原型化继</p>
+<p myattr="yours" title="js">遗留的速度问题，为客户提供更流畅的浏览效果</p>
+<div title="language" myattr="my">于原型的语言，内置支持类。JavaScript是Sun公司的注册商标。</div>
+<p title="language" myattr="my">于原型的语言，内置支持类。JavaScript是Sun公司的注册商标。</p>
+
+<a href="#" sendID="4">删除</a>
+
+
+<div class="hide">我是不可见的DIV</div>
+<div>我是可见的div</div>
+
+
+<script>
+	$('p[title][myattr=my]').css('background','red');
+	alert($('div:hidden').html());
+	alert($('div:visible').html());
+</script>
+
+<br /><br /><br /><br /><br /><br />
+<hr />
+<br /><br /><br /><br /><br /><br />
+<div id="a">
+	<p>我是第一个子元素P</p>
+	<p>我是第二个子元素P</p>
+	<p>我是第三个子元素P</p>
+	<p>我是第四个子元素P</p>
+	<p>我是第五个子元素P</p>
+</div>
+
+<a href="http://www.css88.com/jqapi-1.9/">jquery1.9中文API</a>
+
+<div>
+	<p>我是只有一个子元素的标签</p>
+</div>
+
+<script>
+	//$('div p:first-child').css('background','red');
+	//$('div p:only-child').css('background','blue');
+	//$('div p:nth-child(2)').css('background','red');	//这个是从1开始
+	$('div p:nth-child(even)').css('background','blue');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+
+function add(a,b){
+	alert(a+b);
+}
+
+function sub(a,b){
+	alert(a-b);
+}
+
+add.call(sub,3,1);
+
+function Animal(){  
+    this.name = "Animal";  
+    this.showName = function(){  
+        alert(this.name);  
+    }  
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+function Cat(){  
+    this.name = "Cat";  
+}  
+ 
+var animal = new Animal();  
+var cat = new Cat();  
+  
+//通过call或apply方法，将原本属于Animal对象的showName()方法交给对象cat来使用了。  
+//输入结果为"Cat"  
+//animal.showName.call(cat);  
+animal.showName.apply(cat);
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function Animal(name){    
+     this.name = name;    
+     this.showName = function(){    
+         alert(this.name);    
+     }    
+ }    
+   
+ function Cat(name){  
+     Animal.call(this, name);  
+ }    
+   
+ var cat = new Cat("Black Cat");   
+ cat.showName();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var answer = 0;
+function superFunction(){
+ this.answer = 1;
+}
+
+function sonFunction(){
+ alert(this.answer);
+}
+
+sonFunction();  //result:0
+sonFunction.apply(new superFunction()); //result:1
+sonFunction.call(new superFunction()); //result:1
+
+
+
+
+
+
+
+
+function superFunction(arts1,arts2){
+ return 'arts1:' + arts1 + ',arts2:' + arts2;
+}
+
+function sonFunction(a,b){
+ alert(superFunction(a,b));
+}
+
+sonFunction('11','22');  //result: arts1:11,arts2:22
+//实际上，下面2个例子中后面的参数，实际上就是作为当前对象sonFunction(a,b)的参数
+sonFunction.apply(new superFunction(),['33','44']);  //result: arts1:33,arts2:44
+sonFunction.call(new superFunction(),'33','44');  //result: arts1:33,arts2:44
+//注意看下面的例子，实际上，无论是apply还是call，此函数的第一个参数你即使带入参数值，也不会被js所识别，所以为undefined
+sonFunction.apply(new superFunction('11','22'),['33','44']);  //result: arts1:33,arts2:44
+sonFunction.call(new superFunction('11','22'),'33','44');  //result: arts1:33,arts2:44
+sonFunction.apply(new superFunction('11','22'));  //result: arts1:undefined,arts2:undefined
+sonFunction.call(new superFunction('11','22'));  //result: arts1:undefined,arts2:undefined
+
+//两个函数的区别在于参数不一致，apply函数第一个参数为目标对象（即替换当前对象的对象），但第二个参数确实一个参数数组，而call函数的第一个参数虽然仍为目标对象，但第二个参数确是参数值。
+
+
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

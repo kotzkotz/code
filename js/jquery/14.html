@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<div id="outer" style="position:relative">
+	outer
+	<div id="wrap" style="">
+		wrap
+		<div>111111111</div>
+		<div>222222222</div>
+		<p id="p1">我是<span>第1个P</span>标签</p>
+		<p id="p2">我是第2个P标签</p>
+		<p>我是第3个P标签</p>
+		<div>我是div标签</div>
+	</div>
+</div>
+</body>
+<script>
+	// $('#wrap').children('p').css('background','red');
+
+	/*
+	//这两个等价
+	$('#p1').parent().css('background','red');
+	$('#p1').parents('#wrap').css('background','red');
+	*/
+
+	// $('#p1').next().css('background','red');
+	// $('#p1').nextAll('p').css('background','red');
+	// $('#p1').prev().css('background','red');
+	// $('#p1').prevAll('div').css('background','red');
+
+	// $('#p1').siblings('div').css('background','red');
+
+	// $('span').parent().css('background','red').end().css('background','#abcdef');
+
+	$('#p1').nextAll().addBack().css('background','red');
+
+</script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+function dog(){
+	this.bark = function (){
+		alert('汪汪');
+	}
+}
+
+function bit(){
+	this.fire = function (){
+		alert('第一斗犬');
+	}
+}
+
+bit.prototype = new dog();
+
+var sai = new bit();
+
+sai.bark();
+
+function zangao(){
+	this.eat = function (){
+		alert('能吃');
+	}
+}
+
+
+/*
+//原型连只改自己那条连的
+zangao.prototype = new dog();
+zangao.prototype.bark = function (){alert('呜呜')};
+
+var zg = new zangao();
+zg.bark();
+
+sai.bark();
+
+console.log(dog);
+console.log(zg);
+console.log(sai);
+*/
+
+
+//更改方法
+dog.bark = function(){alert('呜呜');};
+
+console.log(dog);
+sai.bark();
+
+
+//怎么修改方法的属性
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

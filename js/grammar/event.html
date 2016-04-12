@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>javascript事件绑定</title>
+</head>
+<body>
+
+<input type="button" value="原生函数" onclick="alert('原生函数')"/>
+<input type="button" value="自定义函数" onclick="dianji()"/>
+<input type="button" value="代码绑定" id="code"/>
+<input type="button" value="事件绑定" id="event"/>
+
+<script>
+function dianji(){
+	alert('自定义函数');
+}
+
+function ebing(){
+	alert('代码绑定');
+}
+
+document.getElementById('code').onclick = ebing;
+
+/*
+监听函数兼容版
+addEventListener:Chrome、FireFox、Opera、Safari、IE9.0及其以上版本
+attachEvent:IE8.0及其以下版本
+*/
+function addEvent(obj,type,handle){
+    try{  // Chrome、FireFox、Opera、Safari、IE9.0及其以上版本
+        obj.addEventListener(type,handle,false);
+    }catch(e){
+        try{  // IE8.0及其以下版本
+            obj.attachEvent('on' + type,handle);
+        }catch(e){  // 早期浏览器
+            obj['on' + type] = handle;
+        }
+    }
+}
+var eventb = document.getElementById('event');
+addEvent(eventb,'click',evbl);
+function evbl(){
+	alert('事件绑定');
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body style="height:3000px;width:3000px;">
+
+<form action="http://www.mishijiaju.com/" id="form1">
+	<input type="text" value="11111" name="username" />
+	<input type="password" value="22222" name="password" />
+	<input type="submit" value="提交" />
+</form>
+
+<script>
+	$('#form1').submit(function (e){
+		alert('提交失败');
+		// return false;
+		e.preventDefault();
+	});
+
+	$(window).resize(function (){
+		alert('浏览器窗口发生改变');
+	});
+
+	/*$(window).scroll(function (){
+		alert('滚动条位置发生偏移');
+	});*/
+
+	//jquert会自动加上滚动条的像素，也就是算的是在整个文档的位置，而非距可见窗口的位置
+	$(document).click(function (e){
+		alert(e.pageX + ',' + e.pageY);
+	});
+</script>
+
+</body>
+</html>

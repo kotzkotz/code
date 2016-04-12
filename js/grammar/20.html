@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+function cry(){
+	alert('哭哭哭');
+}
+
+function la(){
+	alert('笑笑笑');
+}
+
+function addcry(){
+	document.getElementsByTagName('p')[0].addEventListener('click',cry,false);
+}
+
+function addla(){
+	document.getElementsByTagName('p')[0].addEventListener('click',la,false);
+}
+
+function removecry(){
+	document.getElementsByTagName('p')[0].removeEventListener('click',cry,false);
+}
+
+function removela(){
+	document.getElementsByTagName('p')[0].removeEventListener('click',la,false);
+}
+
+</script>
+</head>
+<body>
+<p>点击</p>
+<p>
+	<input type="button" value="会哭了" onclick="addcry()" />
+	<input type="button" value="会笑了" onclick="addla()" />
+	<input type="button" value="不哭了" onclick="removecry()" />
+	<input type="button" value="不笑了" onclick="removela()" />
+</p>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>判断横屏</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" /><!--固定宽高禁缩放 -->
+<meta name="apple-mobile-web-app-capable" content="yes"><!--类webapp-->
+<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--状态条 -->
+<meta name="format-detection" content="telephone=no"><!--电话号码不为链接 -->
+
+<link href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head>
+<script>
+$( window ).bind( "orientationchange", function( event ) {
+   if(event.orientation== "landscape"){
+			location.href = "360.html";}
+	else{
+		alert("请横屏");
+		}		
+	
+});
+
+	
+	
+
+
+
+</script>
+
+<body>
+<div data-role="content">
+请先横屏
+		</div>
+
+</body>
+</html>

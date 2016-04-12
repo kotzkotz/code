@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body>
+<input type="text" value="text" />
+
+<script>
+
+	//键盘按下的时候触发
+	$('input').keydown(function (){
+		alert($(this).val());
+	});
+
+	/*//键盘弹起的时候触发
+	$('input').keyup(function (){
+		alert($(this).val());
+	});*/
+
+	/*$('input').keypress(function (){
+		alert($(this).val());
+	});*/
+
+
+	/*虽然从字面理解, KeyDown是按下一个键的意思, 但实际上二者的根本区别是, 系统由KeyDown返回键盘的代码, 然后由TranslateMessage函数翻译成成字符, 由KeyPress返回字符值. 因此在KeyDown中返回的是键盘的代码, 而KeyPress返回的是ASCII字符. 所以根据你的目的, 如果只想读取字符, 用KeyPress, 如果想读各键的状态, 用KeyDown.
+	
+	keydown是先显示在弹出，keypress是先弹出在显示 。*/
+</script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JQM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head>
+<script>
+
+var i=1;
+var mnt;
+var m;
+
+$(document).bind('pageinit',function()
+{	
+
+
+	
+	$("#dd").click(function() {
+m=+$("#slider").val();		
+
+mnt=setInterval(stroll,200);
+	})
+})
+ function stroll()
+ {
+	 i=i+m;
+	 $.mobile.silentScroll(i);
+	 
+	 while (i>2000)
+	 {
+	 window.clearInterval(mnt);
+			 }
+ }
+</script> 
+<body>
+<div data-role="page" id="page">
+  <div data-role="header">
+    <h1>滚屏</h1>
+  </div>
+  <div id="cc" data-role="content">
+  <button id="dd">滚动</button>
+  <div data-role="fieldcontain">
+    <label for="slider">值:</label>
+    <input type="range" name="slider" id="slider" value="1" min="1" max="10" />
+  </div>
+  
+歌曲名：我不愿你一个人
+歌手/乐队：五月天
+来源：网络
+===========================================================================
+
+前奏： G    C   D    BM    EM    D   G    C   D   BM   EM   C   G   D <br>  
+
+    G     D        BM      EM<br>
+你说呢 明知你不在 还是会问<br>
+  C        G   AM    D<br>
+空气 却不能代替你 出声<br>
+   BM          C  AM      D<br>
+习惯 像永不愈合的 固执伤痕<br>
+  BM     AM D  G<br>
+一思念就撕裂灵魂<br>
+
+    G     D        BM     EM<br>
+把相片 让你能保存 多洗一本<br>
+  C        G    AM    D<br>
+毛衣 也为你准备多 一层<br>
+   BM         C   AM       D<br>
+但是 你孤单时刻 安慰的体温<br>
+   BM    AM D   G<br>
+怎么为你多留一份<br>
+
+       C       D       BM       EM<br>
+我不愿让你一个人 一个人在人海浮沉<br>
+      C       BM     G     D<br>
+我不愿你独自走过 风雨的时分<br>
+       C       D       BM       EM<br>
+我不愿让你一个人 承受这世界的残忍<br>
+     C        D      G<br>
+我不愿眼泪陪你到 永恒<br>
+
+    G     D        BM      EM<br>
+你走后 爱情的遗迹 像是空城<br>
+  C        G   AM    D<br>
+遗落 你杯子手套和 笑声<br>
+   BM          C  AM      D<br>
+最后 你只带走你 脆弱和单纯<br>
+  BM     AM D  G<br>
+和我最放不下的人 <br>
+
+G        D        BM          G<br>     
+也许未来 你会找到 懂你疼你更好的人<br>
+C                 D<br>
+下段旅程 你一定要 更幸福丰盛<br>
+
+       C       D       BM       EM<br>
+我不愿让你一个人 一个人在人海浮沉<br>
+      C       BM     G     D<br>
+我不愿你独自走过 风雨的时分<br>
+       C       D       BM       EM<br>
+我不愿让你一个人 承受这世界的残忍<br>
+     C        D      G<br>
+我不愿眼泪陪你到 永恒<br>
+
+    G     D        BM      EM<br>
+你说呢 明知你不在 还是会问<br>
+  C        G   AM    D<br>
+只因 习惯你满足的 眼神<br>
+   BM          C  AM      D<br>
+只是 我最后一个 奢求的可能<br>
+  BM     AM D  G<br>
+只求你有快乐人生 <br>
+
+      BM    C    AM       D<br>    
+只求命运带你去一段全新的旅程<br>
+  AM     D      G   D<br>
+往幸福的天涯飞奔<br>
+  AM     D      G   D<br>
+别回头就往前飞奔<br>
+   AM    D      G<br>  
+请忘了我还一个人<br>
+
+尾奏：G    C   D   BM   DM7  EM  G
+
+
+ </div>
+  <div data-role="footer">
+    <h4>脚注</h4>
+  </div>
+</div>
+</body>
+</html>

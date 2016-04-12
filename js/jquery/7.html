@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+#go{width: 100px;height: 100px;background: teal;position: absolute;left: 0;top: 0;}
+</style>
+<script src="jquery.js"></script>
+<script>
+	$(function (){
+		/*
+		$('p:first').css('background','red');
+		$('p:last').css('background','blue');
+		$('p:not(".a")').css('background','yellow');	//除去第几个
+		*/
+		/*
+		$('p:even').css('background','red');
+		$('p:odd').css('background','blue');
+		*/
+		/*
+		$('p:eq(2)').css('background','red');	//第几个
+		$('p:gt(2)').css('background','blue');	//大于第几个
+		$('p:lt(2)').css('background','yellow');	//小于第几个
+		*/
+		//$(':header').css('background','red');	//选择h标签
+
+		$('#go').animate({'left':1000,'top':300},10000);
+		$(':animated').css('background','red');
+	})
+</script>
+</head>
+<body>
+<p><span>我是</span>第<em>11111</em>个标签</p>
+<p>我是第22222个标签</p>
+<p class="a">我是第33333个标签</p>
+<p>我是第44444个标签</p>
+<p>我是第55555个标签</p>
+
+
+<h1>我是h1标签</h1>
+<h2>我是h2标签</h2>
+<h3>我是h3标签</h3>
+<h4>我是h4标签</h4>
+<h5>我是h5标签</h5>
+<h6>我是h6标签</h6>
+<div id="go"></div>
+</body>
+</html>

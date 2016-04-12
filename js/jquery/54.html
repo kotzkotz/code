@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body>
+<input type="button" value="获取数据" />
+<div></div>
+<span style="color:red"></span>
+
+<script>
+	$('input').click(function (){
+		$.ajax({
+			url:'54.php?'+Math.random(),
+			type:'get',
+			timeout:1000,
+			error:function (jqXHR,textStatus,errorThrown){
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+				$('span').append('error:'+errorThrown+'<br />');
+			},
+			success:function (data){
+				$('div').html(data);
+			}
+		});
+	});
+
+	$(document).ajaxError(function (event,request,settings){
+		console.log(event);
+		console.log(request);
+		console.log(settings);
+		$('span').append('ajaxError:'+request.statusText+'<br />');
+	});
+</script>
+</body>
+</html>

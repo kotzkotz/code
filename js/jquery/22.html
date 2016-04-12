@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+.a{background: red}
+.b{background: #abcdef}
+.aa{color: #fff;}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<p title="js">1111111</p>
+<script>
+	// $('p').attr('title','livescript');
+	// $('p').attr('class','a aa');
+	// $('p').removeAttr('class');
+
+	/*$('p').addClass('a aa');
+	$('p').removeClass('aa');*/
+
+	/*$('p').click(function(){
+		$(this).toggleClass('a aa');
+	})*/
+
+	//hasClass()判断class是否存在，返回一个布尔值
+
+	/*$('p').click(function (){
+		if($(this).hasClass('a aa')){
+			$(this).removeClass('a aa');
+		}else{
+			$(this).addClass('a aa');
+		}
+	})*/
+
+	/*$('p').css({
+		'background':'red',
+		'color':'white',
+		'border':'5px solid #abcdef'
+	})*/
+
+	//alert($('p').height());
+	//innerHight()方法获得到的高度不把border和margin计算进去,但是会把padding值计算进去
+	//outerHeight()方法如果参数不写，为默认值false，不会把margin值计算进去，如果参数为true，会把border,margin,padding都计算进去
+	alert('我是outerHeight获得的高度'+$('p').outerHeight(true));
+	alert('我是innerHeight获得的高度'+$('p').innerHeight());
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+*{padding: 0;padding: 0;}
+ul{
+	list-style-type: none;
+}
+body{margin: 50px;}
+div{
+	width: 200px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	border: 1px solid #ccc;
+}
+ul{
+	width: 200px;
+	border: 1px solid #ccc;
+	display: none;
+}
+ul li{
+	height: 24px;
+	line-height: 24px;
+}
+ul li:hover{
+	background: #cfcfcf;
+}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+
+<div>请选择城市</div>
+<ul>
+	<li>北京</li>
+	<li>天津</li>
+	<li>上海</li>
+	<li>重庆</li>
+</ul>
+
+<script>
+	$('div').click(function (e){
+		$('ul').show();
+		console.log(e);
+		e.stopPropagation(); //stopPropagation()	不再派发事件，阻止冒泡 。
+							 //preventDefault()	通知浏览器不要执行与事件关联的默认动作。
+	});
+
+	$(document).click(function(){
+		$('ul').hide();
+	});
+</script>
+
+</body>
+</html>

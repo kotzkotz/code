@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>注意事项</title>
+<style>
+ol li{padding: 10px;}
+</style>
+</head>
+<body>
+<div id="content">
+<!-- 
+// 获取ID为content的内容
+var content = document.getElementById('content').innerHTML;
+
+parseInt(age);
+
+var enc = escape(str);
+
+document.write(enc + '<br />');
+
+var enc = unescape(enc);
+ -->
+<h1>javascript小计</h1>
+<ol>
+	<li>
+获取ID为content的内容:<br />
+var content = document.getElementById('content').innerHTML;innerHTML内部是允许添加html代码的，如：id.innerHTML = "<span class='nav'>你好！</span>";<br />
+var content = document.getElementById('content').value;<br />
+	</li>
+	<li>
+中文或者空格转码方式：<br />
+var str = '我是汉字';<br />
+var enc = escape(str);//转成“%u6211%u662F%u6C49%u5B57”<br />
+var enc = unescape(enc);<br />
+	</li>
+	<li>
+js获取到页面的内容都是字符串，如果需要数字应使用：parseInt(str)。<br />
+“isNaN”判断是不是数字。
+	</li>
+	<li>
+eval() 函数可计算某个字符串，并执行其中的的javascript代码。<br />
+eval('alert("执行了")');<br />
+	</li>
+	<li>
+在对象中：<br />
+obj.per==obj['per']而不是obj.per==obj[per]<br />
+	</li>
+	<li>
+
+	</li>
+	<li></li>
+</ol>
+</div>
+<script>
+
+</script>
+</body>
+</html>

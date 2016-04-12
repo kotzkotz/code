@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+</head>
+<body>
+<ul>
+	<li>春</li>
+	<li>夏</li>
+	<li>秋</li>
+	<li>冬</li>
+</ul>
+<script type="text/javascript">
+/*
+var li = document.getElementsByTagName('li');
+var len = li.length;
+
+for(i=0;i<len;i++){
+	//li[i].setAttribute('onclick','abc('+i+')');	//IE8以上
+	li[i].onclick = abc;
+	li[i].num = i;
+}
+
+function abc(){
+	alert(this.num);
+}
+*/
+
+
+//闭包计数器
+var li = document.getElementsByTagName('li');
+var len = li.length;
+
+for(i=0;i<len;i++){
+	li[i].onclick = (function(i){
+			return function(){
+				alert(i);
+				console.log(i);
+			}
+			})(i);
+
+}
+
+/*
+var li = document.getElementsByTagName('li');
+var len = li.length;
+for(var i=0;i<len;i++) {
+   abc(li[i],i);
+}
+
+function abc(obj,i) {
+obj.onclick = function(){
+alert(i);
+};
+}
+*/
+
+</script>
+</body>
+</html>

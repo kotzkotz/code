@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+div{
+	width: 300px;
+	height: 150px;
+	margin-bottom: 10px;
+	background: blue;
+}
+
+div#test4{
+	width: 50px;
+	height: 50px;
+	z-index:1000;
+	position:absolute;
+	left:500px;
+	top:100px;
+	background: red;
+}
+
+</style>
+
+<script type="text/javascript">
+
+/*
+//通过静态方法给jquery增加插件
+$ = {};
+
+$.sing = function (){
+	alert('heigh歌');
+}
+
+$.sing();
+*/
+
+window.onload = function (){
+	document.getElementById('test1').onclick = function (){
+		alert('您点击的是一个div');
+	}
+
+	document.getElementById('test2').onclick = function (){
+		var str = '#' + Math.random()*10000000;
+		str = str.substr(0,7);
+		this.style.background = str;
+	}
+
+	document.getElementById('test3').onmousemove = function (ev){
+		var test4 = document.getElementById('test4');
+		test4.style.left= ev.layerX + 'px';
+		test4.style.top = ev.layerY + 'px';
+	}
+}
+
+
+
+</script>
+</head>
+<body>
+
+<div id="test1"></div>
+<div id="test2"></div>
+<div id="test3"></div>
+<div id="test4"></div>
+
+</body>
+</html>

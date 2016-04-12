@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+{if $price>500}
+好的，我喜欢
+{else}
+对不起
+{/if}
+
+<br />
+
+{if $height == 180}
+好身高
+{else}
+身高不合适
+{/if}
+
+<br />
+
+{if $age%3==0 }
+你的年龄是3的倍数
+{else}
+你的年龄不是3的倍数
+{/if}
+
+<br />
+
+{if $smarty.get.id==7 || $smarty.get.id==0}
+今天是周末
+{else if $smarty.get.id == 6}
+今天是周六
+{else}
+上班吧
+{/if}
+
+
+</body>
+</html>

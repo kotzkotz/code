@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>切换</title>
+<style type="text/css">
+ul {
+width:200px;
+height:30px;
+}
+li {
+    float:left;
+    list-style:none;
+    margin:5px;
+}
+
+
+p{
+width:200px;
+height:200px;
+border:solid 1px blue;
+}
+
+
+#news,#people,#tech {
+    display:none;
+}
+
+</style>
+
+<script type="text/javascript">
+
+function tab(str){
+	var arr = ['mil','news','people','tech'];
+	for(var i=0,len = arr.length;i<len;i++){
+		if(str == arr[i]){
+			document.getElementById(arr[i]).style.display = 'block';
+		}else{
+			document.getElementById(arr[i]).style.display = 'none';
+		}
+	}
+}
+
+
+
+</script>
+
+</head>
+    <body>
+        <div>
+            <ul>
+                <li onmouseover="tab('mil');">军事</li>
+                <li onmouseover="tab('news');">新闻</li>
+                <li onmouseover="tab('people');">人物</li>
+                <li onmouseover="tab('tech');">科技</li>
+            </ul>
+            <p id="mil">
+               军事频道
+            </p>
+            <p id="news">
+                新闻频道
+            </p>
+            <p id="people">
+               人物频道
+            </p>
+            <p id="tech">
+               科技频道
+            </p>
+        </div>
+    </body>
+</html>

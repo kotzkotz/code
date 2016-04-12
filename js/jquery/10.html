@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+
+<form action="">
+	<input type="hidden" name="" value="我是隐藏的文本框" />
+	<input type="text" name="" id="" value="我是文本框" />
+	<input type="password" name="" id="" value="我是密码框" />
+	<input type="button" value="我是按钮" />
+	<input type="submit" value="我是提交按钮" />
+	<input type="radio" name="" id="" value="我是单选按钮" />
+	<input type="checkbox" name="" id="" value="我是复选按钮" />
+	<input type="reset" value="我是重置按钮" />
+	<textarea name="" id="" cols="30" rows="10">我是文本框</textarea>
+	<select name="" id="">
+		<option value="11111">11111</option>
+		<option value="22222">22222</option>
+		<option value="33333">33333</option>
+	</select>
+	<input type="file" name="" id="" />
+	<input type="image" src="http://www.baidu.com/img/bdlogo.gif" alt="" />
+</form>
+
+<script>
+	//alert($(':input').length);
+	//alert($(':text').length);
+	$(':text').css('background','red');
+	$(':password').css('background','blue');
+	$(':button').css('background','yellow');
+	alert($(':radio').val());
+	alert($('input[type=reset]').val());
+	alert($('input:hidden').val());
+</script>
+</body>
+</html>

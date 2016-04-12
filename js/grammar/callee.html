@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+
+/*
+(function (d,e,f){
+	console.log(arguments);
+	console.log(arguments.length);
+	console.log(arguments[0]);
+	console.log(arguments[3]);
+})(1,2,3,4);
+*/
+
+/*
+(function (a,b){
+	arguments[1] = 'wangwu';
+	//var b = 'zhaoliu';
+	alert(b);
+})('zhangsan','lisi')
+*/
+
+/*
+(function (d,e,f){
+	console.log(arguments.callee);
+})('a','b','c');
+*/
+
+
+alert((function (num){
+	if(num<=1){
+		return 1;
+	}else{
+		return num + arguments.callee(num-1);
+	}
+})(100));
+
+
+
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

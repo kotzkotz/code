@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+/*
+语法分析,
+0: 函数运行前的1瞬间, 生成 Active Object (活动对象),下称AO
+1: 
+   1.1 函数声明的参数,形成AO的属性,值全是undefined,
+   1.2 接收实参,形成AO相应的属性的值
+
+2: 分析变量声明声明声明! 如 var age, 
+   如果AO上还没有age属性,则添加AO属性,值是undefined
+   如果AO上已经有age属性,则不做任何影响
+   
+3: 分析函数声明,如 function foo() {}, 
+则把函数赋给AO.foo属性
+注: 如果此前foo属性已存在,则被覆盖
+*/
+
+/*
+var str1 = 'global';
+
+function  t1() {
+    console.log(str1);
+    console.log(str2);
+
+    str2 = 'local';
+}
+
+t1(); // global,not defined
+*/
+
+
+/*
+var str1 = 'global';
+
+function  t1() {
+    console.log(str1);
+    console.log(str2);
+
+    var str2 = 'local';
+}
+
+t1(); //global undefined
+*/
+
+
+/*
+function t(age) {
+    alert(age);
+}
+
+t(5);	//5
+t();	//undefined
+*/
+
+
+/*
+function t2(age) {
+    var age = 99;
+    alert(age);
+}
+
+t2(5);	//99
+*/
+
+
+/*
+function t3(greet) {
+    var greet = 'hello'; // 试着把这一句变成 var greet;再做分析
+    alert(greet);
+
+    function greet() {
+    }
+
+    alert(greet);
+}
+
+t3(null);// hello hello
+*/
+
+/*
+function a(b) {
+   alert(b);
+   function b(){
+        alert (b);
+    }
+    b();
+}
+
+a(1);	//function,function
+*/
+
+
+/*
+function a(b) {
+   alert(b);
+   b = function (){
+        alert (b);
+   }
+   
+   b();
+}
+
+a(1);	//1,function
+*/
+
+(function(window,undefined) {
+})(window);
+
+这是jquery的最外层代码
+
+/*
+(function(window,undefined){})  // 内层表达式,返回值是函数,包在小括号里,当成表达式来执行\
+(function(window,undefined){})(window) // 立即调用
+
+// 而内层函数又没有起名字,称为匿名函数,
+// 这种手法,匿名函数,立即执行,不污染全局.   称为 立即执行匿名函数表达式
+
+*/
+
+// 思路: 为什么传window, 而又不会传undefined?
+/*
+答: 传window是为了速度
+
+function() {
+    function() {
+        function () {
+            function () {
+                function () {
+                    document.getElementById... // 这个document将会尚作用域层层上找，直到最外层
+                }
+            }
+        }
+    }
+}
+
+
+jquery就是为了加快内部查找变局变量的速度，　而直接把window以参数形式传进来
+这样 window 就在jquery内部的 AO上
+
+
+
+不传undefined是为了安全
+因为在IE,FF低版本中 ,  undefined竟然可以重新赋值 ,如 undefined = 3;
+
+
+声明undefined局部变量(名字是undefined而已), 同时,又不传参,值自然是undefined
+防止了外界对undefined的污染
+
+*/
+
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

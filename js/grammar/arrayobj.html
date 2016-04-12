@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>javascript的数组和对象</title>
+</head>
+<body>
+<h1>javascript中数组和对象在大部分时候是可以相互转化的</h1>
+<script>
+// 创建数组
+var arr1 = ['a','b','c','d'];
+var arr2 = new Array('a','b','c','d');
+
+// 创建对象
+var obj1 = {name:'xiaoming',age:22,number:'007',score:99};
+var obj2 = new Object();
+obj2.name = 'xiaoming';
+obj2.age = 2;
+obj2.number = '007';
+obj2.score = 99;
+obj2['sex'] = '男'; //不推荐
+
+// 读取变量：数组只能用一种方式，对象可以是两种方式。
+console.log(arr1[0],obj1['name'],obj1.name);
+
+// 获得数组的长度
+var arrleng = arr1.length;
+// 获得变量的长度
+var arr3 = Object.keys(obj1);
+var objleng = arr3.length;
+console.log(arrleng,objleng);
+
+// 数组循环
+for(var i=0,len=arr1.length;i<len;i++){
+	document.write(arr1[i]+'<br />');
+}
+// 对象循环（数组也可以使用）
+for(per in obj1){
+	// 这里不管是数组还是对象都只能用数组的方式。
+	console.log(obj1[per]);
+
+}
+
+// 对象的方法
+var zhang = {name:'zhangsan',age:22,talk:null};
+function t(){
+	alert('I am ' +this.name);
+}
+
+zhang.talk = t;
+zhang.talk();
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

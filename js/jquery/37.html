@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<style type="text/css">
+div{
+	width: 50px;
+	height: 50px;
+	background: #f60;
+	position: absolute;
+	left: 10px;
+	top: 40px;
+}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<button>RUN!!!</button>
+<input id="stop" type="button" value="stop" />
+<input id="dequeue" type="button" value="dequeue" />
+<input id="finish" type="button" value="finish" />
+<div></div>
+
+<script>
+	$('button').click(function (){
+		$('div').animate({
+			'top':400
+		},2000).animate({
+			'left':1000
+		},2000).animate({
+			'top':40
+		},2000).animate({
+			'left':10
+		},2000);
+	});
+
+	$('#stop').click(function (){
+		$('div').stop(true,true);
+	});
+
+	$('#dequeue').click(function (){
+		$('div').dequeue();
+	});
+
+	$('#finish').click(function (){
+		$('div').finish();
+	});
+</script>
+</body>
+</html>

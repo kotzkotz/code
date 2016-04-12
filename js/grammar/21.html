@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+/*
+
+//火狐，谷歌浏览器
+
+window.onload = function (){
+    test1 = document.getElementById('test1');
+    test1.addEventListener('click',function (){alert(123);},false);
+    test1.addEventListener('click',function (){alert(456);},false);
+
+}
+*/
+
+/*
+IE的事件模型相比w3c的标准事件,主要有3点不同:
+0: 绑定事件的函数不样, IE中用 attachEvent() ,detachEvent
+1: 事件必须要加on, 比如标准中第1个参数为click,相对的,IE中要写onclick
+2: IE6 模型中,不支持捕捉模型.只支持冒泡(靠JS弥补不了). IE7,8,已经捕捉
+   注:但在更新后的系统上,IE6支持捕捉,具体待查
+3: IE7,8中还有个毛病,就是先绑定的事件后发生(准确的说,有可能随机发生)
+4: 绑定的事件中, this的指向问题 w3c模型中,this指向对象本身, 而IE模型中this指向window
+   这一点,是个比较麻烦的问题,好在用JS知识能够修复
+5: 事件对象不一样, w3c中,事件对象自动被传递给事件函数的第一个参数.
+   而在IE中,事件对象是window.event属性值
+*/
+
+window.onload = function (){
+    var test1 = document.getElementById('test1');
+    test1.attachEvent('onclick',function (){alert(123);},false);
+    test1.attachEvent('onclick',function (){alert(456);},true);
+}
+
+
+
+</script>
+</head>
+<body>
+
+<input type="button" value="点我" id="test1" />
+
+</body>
+</html>

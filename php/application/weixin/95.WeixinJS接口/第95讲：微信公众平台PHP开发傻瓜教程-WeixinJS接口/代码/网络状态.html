@@ -1,0 +1,40 @@
+﻿
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>网络判断</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+</head>
+<script>
+
+$(document).ready(function(){
+	$("#abc").click(function(){ 
+WeixinJSBridge.invoke('getNetworkType',{},
+		function(e){
+	    	WeixinJSBridge.log(e.err_msg);
+			alert(e.err_msg);			
+	    });
+	});
+		});
+</script>
+<body>
+<div data-role="page" id="page3">
+  <div data-role="header">
+    <h1>网络状态</h1>
+    
+  </div>
+      <div data-role="content">
+   
+<button id="abc">网络状态</button> 
+      </div>
+ </div>
+ 
+</body>
+</html>

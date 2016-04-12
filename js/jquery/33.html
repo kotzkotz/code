@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<style type="text/css">
+p{background: #f00;padding: 20px;}
+a{background:#f90;padding: 20px;}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body>
+<p>
+	<a href="###">点击</a>
+</p>
+
+<script>
+	$('a').click(function (){
+		alert('a元素被点击了');
+	});
+
+	$('p').click(function (){
+		alert('p元素被点击');
+	});
+
+	// $('a').trigger('click');     //会冒泡
+	$('a').triggerHandler('click');	//阻止冒泡
+</script>
+</body>
+</html>

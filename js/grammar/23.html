@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+//对比事件
+
+window.onload = function (){
+	var test1 = document.getElementById('test1');
+	if(test1.attachEvent){
+		test1.attachEvent('onclick',function (ev){
+			var y;
+			for(var i in ev){
+				y += i+'-----'+ev[i]+'<br />';
+			}
+			document.write(y);
+		},false);
+	}else{
+		test1.addEventListener('click',function (ev){
+			var y;
+			for(var i in ev){
+				y += i+'-----'+ev[i]+'<br />';
+			}
+			document.write(y);
+		},false);
+	}
+}
+
+</script>
+</head>
+<body>
+
+<input type="button" id="test1" value="点我" />
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+#china{
+	width: 1000px;
+	height: 500px;
+	border: 1px solid blue;
+}
+
+#bj,#hd{
+	width: 80%;
+	height: 80%;
+	margin: 0 auto;
+	border: 1px solid blue;
+}
+
+
+</style>
+
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+<div id="china">
+china
+	<div id="bj">
+	bj
+		<div id="hd">
+		hd
+		</div>
+	</div>
+</div>
+</body>
+
+<script type="text/javascript">
+	function $(id){
+		return document.getElementById(id);
+	}
+
+	$('bj').addEventListener('click',function (){alert('进bj')},true);
+	$('china').addEventListener('click',function (){alert('进china')},true);
+	$('hd').addEventListener('click',function (){alert('进hd')},true);
+
+	$('bj').addEventListener('click',function (){alert('出bj')},false);
+	$('china').addEventListener('click',function (){alert('出china')},false);
+	$('hd').addEventListener('click',function (){alert('出hd')},false);
+
+</script>
+</html>

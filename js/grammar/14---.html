@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+function cat(leg,tail){
+	this.leg = leg;
+
+	this.tail = tail;
+
+	this.climb = function (){
+		alert('我会爬树');
+	}
+}
+
+function tiger(color){
+	this.color = color;
+
+	this.extend = function(parent){
+		//js可以循环对象
+		for(var key in parent){
+			this[key] = parent[key];
+		}
+	}
+}
+
+var tager = new tiger('yello');
+tager.extend(new cat(4,2));
+console.log(tager);
+tager.climb();
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

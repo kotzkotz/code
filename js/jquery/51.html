@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body>
+<input type="button" value="获取新闻列表" />
+<div id="info">
+	<img src="loading.gif" alt="" id="loading" style="display:none" />
+	<ul></ul>
+</div>
+
+<script>
+	$('input').click(function (){
+		$.ajax({
+			url:'51.php?'+Math.random(),
+			type:'get',
+			success:function (data){
+				// alert(data);
+				var res = eval(data);
+				for(var i=0,len=res.length;i<len;i++){
+					$('#info>ul').append('<li>'+res[i].title+'</li>');
+				}
+			}
+		});
+	});
+
+
+	$(document).ajaxStart(function (){
+		$('img').show();
+	}).ajaxStop(function (){
+		$('img').hide();
+	});
+</script>
+</body>
+</html>

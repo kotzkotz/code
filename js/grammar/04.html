@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+/*
+function t1(){
+	var age = 20;
+	var t2 = function(){
+		return age;
+	}
+	return t2;
+}
+
+var age = 30;
+var t3 =t1();
+
+alert(t3());
+alert(age);
+*/
+
+/*
+
+//第一种方法闭包
+function counter(){
+	var cnt = 0;
+	var cnter = function (){
+		return ++cnt;
+	}
+
+	return cnter;
+}
+
+//第二种方法闭包
+function counter(){
+	var cnt = 0;
+	function cnter(){
+		return ++cnt;
+	}
+
+	return cnter;
+}
+
+
+var inc = counter();
+alert(inc());	//1
+alert(inc());	//2
+alert(inc());	//3
+
+var ind = counter();
+alert(ind());	//1
+
+*/
+
+
+/*
+var cnt = (function (){
+	var cnt = 0;
+	return function (){
+		return ++cnt;
+	}
+})();
+
+
+alert(cnt());	//1
+alert(cnt());	//2
+alert(cnt());	//3
+*/
+
+
+/*
+//自己的命名空间，如jquery插件
+$ = {};
+$.cnt = (function (){
+	var cnt = 0;
+	return function(){
+		return ++cnt;
+	}
+})();
+
+alert($.cnt());	//1
+alert($.cnt());	//2
+alert($.cnt());	//3
+*/
+
+//个人命名空间
+kop = {};
+kop.cnt = (function (){
+	var cnt = 0;
+	return function (){
+		return ++cnt;
+	}
+})();
+
+alert(kop.cnt());	//1
+alert(kop.cnt());	//2
+alert(kop.cnt());	//3
+
+
+
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

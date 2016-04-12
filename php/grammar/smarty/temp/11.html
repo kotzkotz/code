@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+<table border="1">
+	<tr><td>序号</td><td>商品名</td><td>商品价格</td><td>发布时间</td></tr>
+
+	{foreach $goods as $k=>$g}
+	<tr><td>{$g@iteration}</td><td>{$g.goods_name}</td><td>{$g.shop_price}</td><td>{$g.add_time|date_format:"%Y-%m-%d %H:%M:%S"}</td></tr>
+	{/foreach}
+</table>
+
+
+<h1>{$poem}</h1>
+<h1>{$poem|lower}</h1>
+<h1>{$poem|upper}</h1>
+
+
+</body>
+</html>

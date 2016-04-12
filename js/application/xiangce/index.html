@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>相册</title>
+
+<style type="text/css">
+ul{
+	list-style: none;
+}
+li{
+	float: left;
+	margin: 5px;
+}
+</style>
+
+<script type="text/javascript">
+
+function chpic(num){
+	var arr = ['','Sunset.jpg','Blue.jpg','Winter.jpg','Water.jpg'];
+	document.getElementsByTagName('div')[0].children[0].src = 'images/' + arr[num];
+}
+
+
+</script>
+</head>
+<body>
+<div>
+	<img src="images/Sunset.jpg" height="300" width="400" />
+	<ul>
+		<li onclick="chpic(1)"><img src="images/1.gif"/></li>
+		<li onclick="chpic(2)"><img src="images/2.gif"/></li>
+		<li onclick="chpic(3)"><img src="images/3.gif"/></li>
+		<li onclick="chpic(4)"><img src="images/4.gif"/></li>
+	</ul>
+</div>
+
+
+</body>
+</html>

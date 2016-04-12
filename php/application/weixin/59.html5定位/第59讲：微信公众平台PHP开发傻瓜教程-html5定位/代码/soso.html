@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SOSOMap - 街景图层 PanoramaLayer </title>
+<!--引入SOSO街景地图API，使用时记得替换YourKey！ -->
+<script src="http://map.soso.com/api/v2/main.js?key=9e7c7a85c670bc5c85ffd9ac1a40e662"></script>
+<script>
+
+
+if(window.navigator.geolocation){
+navigator.geolocation.getCurrentPosition(success);
+}
+ 
+//定位成功
+function success(position){
+var lat=position.coords.latitude; 
+var lng=position.coords.longitude;
+var center;  
+center = new soso.maps.LatLng(lat,lng);
+//创建街景服务类实例
+var ps = new soso.maps.PanoramaService();
+//使用getPano方法吸附街景
+ps.getPano(center,1000,function(panoInfo){
+var numid=panoInfo.svid;
+var reurl="http://map.soso.com/#pano="+numid+"&heading=310&pitch=20&zoom=1&key=yourkey";  
+window.location.href=reurl;	
+});
+}
+</script>
+</head>
+<body>
+
+
+</body>
+</html>
+                     

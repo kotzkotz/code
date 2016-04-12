@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>字符串及日期</title>
+</head>
+<body>
+<script>
+var str = '我是好人';
+document.write(str.length + '<br />');
+document.write(str.concat(',大好人') + '<br />');
+document.write(str.indexOf('人') + '<br />');
+document.write(str.substr(2) + '<br />');
+document.write('abcdefj'.toUpperCase() + '<br />');
+document.write(str.replace('好','坏') + '<br />');
+document.write('<hr />');
+
+
+
+var d = new Date();
+var year = d.getFullYear();
+var month = d.getMonth();
+var date = d.getDate();
+var hours = d.getHours();
+var minutes = d.getMinutes();
+var seconds = d.getSeconds();
+document.write(year + '/' + (month+1) + '/' + date + ' ' + hours + ':' + minutes + ':' + seconds + '<br />');
+document.write('<hr />');
+
+
+
+var num = 123.12;
+var min = 1;
+var max = 10;
+document.write(Math.ceil(num) +'<br />');
+document.write(Math.floor(num) +'<br />');
+document.write(Math.min(min,max) + '<br />');
+document.write(Math.max(min,max) + '<br />');
+document.write(Math.pow(2,3) + '<br />');
+document.write(Math.random() + '<br />');
+document.write(Math.round(num) + '<br />');
+document.write(Math.sqrt(9) + '<br />');
+document.write('<hr />');
+
+
+
+var a = ['a','b','c'];
+var b = ['d','e','f'];
+document.write(a.concat(b) + '<br />');
+document.write(a.join('') + '<br />');
+document.write(a.pop() + '<br />');
+document.write(a + '<br />');
+document.write(a.push('d') + '<br />');
+document.write(a.shift() + '<br />');
+document.write(a.unshift('h') + '<br />');
+document.write(a.sort() + '<br />');
+document.write(a.reverse() + '<br />');
+document.write(a.slice(1) + '<br />');
+a.splice(1,1,'i');
+document.write(a + '<br />');
+</script>
+</body>
+</html>

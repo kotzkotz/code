@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+function cat(){
+	this.climb = function (){
+		alert('我会爬树');
+	}
+}
+
+console.log(cat.prototype);	// 空对象,显示为cat
+console.log(cat.prototype.constructor);	// 因为原型对象的constructor指向cat,所以显示为cat
+console.log(cat.prototype.__proto__);	// 空对象 Object
+console.log(cat.prototype.__proto__.__proto__);	// null 
+
+
+
+</script>
+</head>
+<body>
+
+
+
+</body>
+</html>

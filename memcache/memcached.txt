@@ -1,0 +1,39 @@
+memcached.exe -d install
+memcached.exe -m 200MB -d start
+netstat -an
+
+telnet 127.0.0.1 11211
+
+
+增加
+基本语法是:
+add key名 0 存放时间(秒) 数据大小(字符)
+举例:
+add key1 0 30 5
+hello
+STORED
+
+获取
+基本语法是:
+get key值
+get key1
+
+修改
+set key名 0 存放时间 数据大小.
+举例:
+set key1 0 40 5
+如果key1不存在，则相当于增加新，如果存在，则相当有替换
+
+replace key名 存放时间 数据大小
+replace key1 0 40 5
+如果key1不存在，则失败，这个指令要求key必须存在.
+
+删除
+基本语法是
+delete key名
+比如
+delete key1
+
+
+stats
+这里主要大家可以去计算出命中率 cmd_hits/cmd_get . 越高越好.

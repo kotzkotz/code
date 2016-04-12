@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+
+现在是{$time|date_format:"%Y-%m-%d %H:%M:%S"}<br />
+现在是{$time1|date_format:"%Y-%m-%d %H:%M:%S"}<br />
+现在是{$time2|date_format:"%Y-%m-%d %H:%M:%S" nocache}<br />
+现在是{nocache}{$time3|date_format:"%Y-%m-%d %H:%M:%S"}{/nocache}<br />
+
+
+
+<table border="1">
+	<tr>
+		<td>商品ID</td><td>商品名称</td><td>商品价钱</td><td>加入时间</td>
+	</tr>
+	{foreach $goods as $k=>$v}
+	<tr>
+		<td>{$v.goods_id}</td><td>{$v.goods_name}</td><td>{$v.shop_price}</td><td>{$v.add_time|date_format:"%Y-%m-%d %H:%M:%S"}</td>
+	</tr>
+	{/foreach}
+</table>
+
+
+<h1>
+	{insert name="welcome" user="lily"} <br />
+	{insert name='say' parm='word' parm2='世界'}
+</h1>
+
+
+
+</body>
+</html>

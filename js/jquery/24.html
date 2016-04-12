@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+button{
+	position: fixed;
+	top: 50px;
+}
+</style>
+<script src="jquery.js"></script>
+</head>
+<body style="height:8000px">
+<button>弹出滚动条离顶部的距离</button>
+<p>11<strong style="background:red">111</strong>11</p>
+<script>
+	$('button').click(function (){
+		alert($(window).scrollTop());
+	});
+
+	//html()会返回html代码，text()只会返回文本信息
+	alert($('p').html());
+	alert($('p').text());
+
+	$('p').html('<span>改了</span>');
+	alert('点击继续');
+	$('p').text('<span>没改</span>');
+</script>
+</body>
+</html>

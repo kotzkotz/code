@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body>
+<p>这是P标签</p>
+
+<div>
+	<input type="text" name="" id="" value="123456" />
+	<span style="display:none">已获取焦点</span>
+	<!-- <p><input type="text" value="654321" /></p>
+	<p><em><input type="text" value="abcdef" /></em></p> -->
+</div>
+
+<script>
+
+	/*$('p').click(function (){
+		alert('click事件');
+	});*/
+
+	/*//双击
+	$('p').dblclick(function (){
+		alert('dblclick事件');
+	});*/
+
+	/*//获取焦点
+	$('div').focusin(function (){
+		$(this).children('span').show();
+	});
+	$('input').focusin(function (){
+		$('span').show();
+	});*/
+
+	/*//鼠标按下时触发
+	$('p').mousedown(function (){
+		alert($(this).text());
+	});*/
+
+	/*//鼠标松开时触发
+	$('p').mouseup(function (){
+		alert($(this).text());
+	});*/
+
+	/*//鼠标移动时触发
+	$(document).mousemove(function (e){
+		$('input').val(e.pageX + ',' + e.pageY);
+	});*/
+
+	/*//mouseover()鼠标进入的时候触发，mouseout()鼠标离开的时候触发
+	$('p').mouseover(function (){
+		$(this).css('background','red');
+	}).mouseout(function (){
+		$(this).css('background','none');
+	});*/
+
+	//与mouseover/mouseout的区别是mouseenter/mouseleave可以阻止冒泡；
+	$('p').mouseenter(function (){
+		$(this).css('background','red');
+	});
+
+	$(document).mouseleave(function (){
+		$('p').css('background','none');
+	});
+
+</script>
+</body>
+</html>

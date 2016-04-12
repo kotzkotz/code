@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+<p class="first">我是第1个P标签</p>
+<p id="second">我是第2个P标签</p>
+<p>我是第3个P标签</p>
+<p>我是第4个P标签</p>
+<p>我是第5个P标签</p>
+<p>我是第6个P标签</p>
+</body>
+<script>
+	// $('p:eq(0)').css('background','red');
+	// $('p').eq(0).css('background','red');
+	//$('p').filter(':even').css('background','red');
+	/*$('p').click(function(){
+		if($(this).is('.first')){
+			$(this).css('background','red');
+		}
+	})*/
+
+	// $('p').not('#second').css('background','red');
+	$('p').slice(1,3).css('background','red');	//[1,3)
+
+</script>
+</html>

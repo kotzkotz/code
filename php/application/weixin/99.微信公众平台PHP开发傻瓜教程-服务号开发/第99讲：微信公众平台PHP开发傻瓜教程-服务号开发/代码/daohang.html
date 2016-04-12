@@ -1,0 +1,29 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+
+</head>
+
+<body id="latitude">
+
+<script>
+
+if (window.navigator.geolocation)
+  {
+	navigator.geolocation.getCurrentPosition(success);
+  }
+	
+else{
+	alert("not alow");
+	}    
+function success(position){
+	var lat=position.coords.latitude;	//获取经纬度
+	var lng=position.coords.longitude;
+	var reurl="http://mo.amap.com/?from="+lat+","+lng+"(%E4%BD%A0%E7%9A%84%E4%BD%8D%E7%BD%AE)&to=23.0215480000,113.1214160000(%E6%88%91%E7%9A%84%E5%85%AC%E5%8F%B8)&type=0&opt=1&dev=1" ;  
+	window.location.href=reurl;		//跳转
+		}
+</script>
+</body>
+</html>

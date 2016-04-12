@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+
+        {literal}
+        foreach循环数组的典型写法
+        {foreach from=$source key=$key item=$item}
+        {/foreach}
+        
+        如何来理解foreach呢?
+        答: from是来自的意思,即,循环$source这个变量
+
+        从头到尾,挨个儿的把$source的每一个单元的"键"和"值"拿出来,
+        分别赋给 $key, $item
+
+        因此,循环过程中,$key,$item的值,不断变化,直到循环结果
+        {/literal}
+
+
+        
+			
+			
+
+        
+
+
+<table border="1">
+	<tr>
+		<td>id</td><td>商品名</td><td>价格</td>
+	</tr>
+	{foreach from=$goods key="k" item="v"}
+	<tr>
+		<td>{$v.goods_id}</td><td>{$v.goods_name}</td><td>{$v.shop_price}</td>
+	</tr>
+	{/foreach}
+
+</table>
+
+
+
+<h2>用iteration来实现隔行变色</h2>
+<table border="1">
+	<tr>
+		<td>id</td><td>商品名</td><td>价格</td>
+	</tr>
+	{foreach from=$goods key="k" item="v"}
+	<tr {if $v@iteration %2 == 0}style="background:red"{else}style="background:blue"{/if}>
+		<td>{$v.goods_id}</td><td>{$v.goods_name}</td><td>{$v.shop_price}</td>
+	</tr>
+	{/foreach}
+</table>
+
+<pre>
+用@first控制首行
+@first是1个布尔值,当第1次循环时,其值为真,否则其值为假
+@last,类推
+</pre>
+
+<table border="1">
+	<tr>
+		<td>id</td><td>商品名</td><td>价格</td>
+	</tr>
+	{foreach from=$goods key="k" item="v"}
+	<tr {if $v@first}style="background:red"{else if $v@last}style="background:red"{/if}>
+		<td>{$v.goods_id}</td><td>{$v.goods_name}</td><td>{$v.shop_price}</td>
+	</tr>
+	{/foreach}
+</table>
+
+
+
+
+
+{while $age < 18}
+现在{$age++}岁，未成年<br />
+{/while}
+
+</body>
+</html>

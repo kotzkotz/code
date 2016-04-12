@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>定时器</title>
+
+<style type="text/css">
+
+
+</style>
+
+<script type="text/javascript">
+
+function t1(){
+	//window.location.href = 'http://www.baidu.com';
+	alert('2秒弹');
+}
+
+var stop = setTimeout('t1()',2000);
+
+function t2(){
+	alert('每2秒一弹');
+}
+
+var ting = setInterval('t2()',2000);
+
+//停止系
+function t3(){
+	window.clearTimeout(stop);
+}
+
+function t4(){
+	clearInterval(ting);
+}
+
+</script>
+</head>
+<body>
+<input type="button" onclick="t3()" value="停止第一次" />
+<input type="button" onclick="t4()" value="停止每一次" />
+</body>
+</html>

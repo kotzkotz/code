@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body>
+
+<p>这是P标签</p>
+
+<script>
+	/*$('p').click(function(){
+		$(this).append('<div>我是新增的p标签</div>');
+	});*/
+
+	/*$('p').bind('click',function (){
+		alert($(this).text());
+	});
+
+	$('p').mouseover(function (){
+		$(this).css('background','red');
+	});
+
+	$('p').unbind('click mouseover');*/
+
+	/*$('p').one('click',function (){
+		alert($(this).text());
+	})*/
+
+	/*//delegate基本被on取代
+	$('body').delegate('p','click',function (){
+		$(this).append('<div>我是新增的p标签</div>');
+	})*/
+
+	$('body').on('click','p',function (){
+		$(this).append('<div>我是新增的p标签</div>');
+	});
+
+
+</script>
+</body>
+</html>

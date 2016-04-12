@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+<script src="jquery.js"></script>
+</head>
+<body>
+
+<input type="text" name="" id="" value="11111" />
+<input type="password" name="" id="" value="11111" />
+<input type="file" name="" id="" />
+<textarea name="" id="" cols="30" rows="10">1231231212213</textarea>
+<span style="display:none">asdasdfsdf</span>
+
+<script>
+	/*//获取焦点，focus事件本身是不冒泡的，focusin可以通过冒泡触发的
+	$('input').focus(function (){
+		$('span').show();
+	});
+	//blur()失去焦点时
+	$('input').blur(function (){
+		$('span').hide();
+	});
+	//当有focus事件的元素里面的值改变的时候，并且触发了blur事件，才算完成一次change事件
+	$('input').change(function(){
+		alert($(this).val());
+	});*/
+
+	//select()有元素被选择时触发
+	$('input').select(function(){
+		$('span').show();
+	});
+
+	$('textarea').select(function (){
+		$('span').show();
+	});
+</script>
+
+</body>
+</html>

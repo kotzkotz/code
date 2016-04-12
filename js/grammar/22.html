@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+
+//火狐谷歌，this是元素本身，IEthis是window
+
+window.onload = function (){
+	var test1 = document.getElementById('test1');
+	if(test1.attachEvent){
+		test1.attachEvent('onclick',function (){alert(this)},false);
+		test1.attachEvent('onclick',function (){alert(1)},false);
+		test1.attachEvent('onclick',function (){alert(2)},false);
+	}else{
+		test1.addEventListener('click',function (){this.style.background='blue'},false);
+		test1.addEventListener('click',function (){alert(1)},false);
+		test1.addEventListener('click',function (){alert(2)},false);
+	}
+}
+
+</script>
+</head>
+<body>
+
+<input type="button" id="test1" value="点我" />
+
+</body>
+</html>

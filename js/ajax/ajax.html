@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>ajax</title>
+	<script src="jquery.js"></script>
+</head>
+<body>
+
+
+
+<select id="sheng">
+	<option value="0">请选择省</option>
+	<option value="1">河北</option>
+	<option value="2">河南</option>
+</select>
+<select id="shi">
+	<option value="0">请选择市</option>
+</select>
+<select id="qu">
+	<option value="0">请选择区</option>
+</select>
+
+
+
+<script>
+
+	// 第一级联动
+	$('#sheng').change(function(){
+		var sheng_id = $('#sheng').val();
+		$.ajax({
+			type: 'POST',		//发送格式
+			url: 'http://127.0.0.1/ajax/houtai.php',	//发送地址
+			data: 'param='+sheng_id,		//发送数据
+			dataType:'json',	//接收数据类型：一般xml,text,json
+			success: function(msg){
+				// 初始化数据
+				$('#shi').html('<option value="0">请选择市</option>');
+				$('#qu').html('<option value="0">请选择区</option>');
+				// 生成数据
+				$.each(msg,function(k,v){
+					var str = '<option value="'+k+'">'+v+'</option>';
+					$('#shi').append(str);
+				});
+			},
+			error: function(msg){
+				alert(msg.responseText);
+			}
+		});
+	})
+
+
+	// 第二级联动
+	$('#shi').change(function(){
+		var shi_id = $('#shi').val();
+		$.ajax({
+			type: 'POST',		//发送格式
+			url: 'http://127.0.0.1/ajax/houtai.php',	//发送地址
+			data: 'param='+shi_id,		//发送数据
+			dataType:'json',	//接收数据类型：一般xml,text,json
+			success: function(msg){
+				$('#qu').html('<option value="0">请选择区</option>');
+				$.each(msg,function(k,v){
+					var str = '<option value="'+k+'">'+v+'</option>';
+					$('#qu').append(str);
+				});
+			},
+			error: function(msg){
+				alert(msg.responseText);
+			}
+		});
+	})
+
+	function js_foreach(){
+		var obj = {'a':'zhe shi a','b':'zhe shi b','c':'zhe shi c'};
+
+		for(var i in obj){
+			alert('键：'+i+"\r\n"+'值：'+obj[i]);
+		}
+	}
+	
+</script>
+</body>
+</html>

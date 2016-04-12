@@ -1,0 +1,30 @@
+
+#这里可以指定是否让人访问
+	Allow from all
+	#是否列出文件目录结构
+	# 如果希望列出 indexes 不希望 none
+	#Options indexes
+	#如何配置网站的首页面
+	DirectoryIndex index.php index.html
+	#如何配置404错误页面，引导用户引入新页面
+	errorDocument 404 /404.html
+<IfModule rewrite_module>
+#如果rewrite 模块启用
+#配置我们的rewrite规则
+RewriteEngine On
+#rewrite的规则 如果 aaa.html 就跳转到news.php 
+#$1 表示反向引用，第一个子表达式的内容
+#说明如果在正则规范中直接引用子表达式的内容，则使用\n
+#如果是在后面因为，则使用$n
+RewriteRule news-([a-zA-Z]+)-id(\d+)\.html$  news.php?type=$1&id=$2
+#增加规则
+RewriteRule  index\/login index.php?c=index&a=login
+RewriteRule  ^([a-zA-Z_]+)\/([a-zA-Z_]+)$ index.php?c=$1&a=$2
+
+#如果请求的不是一个文件
+RewriteCond %{REQUEST_FILENAME} !-f
+#并且不是一个目录
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ccc.html index.php
+
+</IfModule>

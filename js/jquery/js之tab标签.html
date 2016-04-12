@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<title>无标题文档</title>
+
+<style type="text/css">
+*{
+	padding: 0;
+	margin: 0;
+}
+ul{
+	list-style-type: none;
+}
+body{
+	margin: 50px ;
+}
+#ul{
+	height: 30px;
+	margin-bottom: 10px;
+}
+#ul li{
+	height: 30px;
+	line-height: 30px;
+	padding: 0 15px;
+	border: 1px solid #abcdef;
+	float: left;
+	margin-right: 3px;
+	cursor: pointer;
+}
+#ul li.current{
+	background: #abcdef;
+}
+
+#content div{
+	width: 300px;
+	height: 200px;
+	border: 1px solid #abcdef;
+	display: none;
+}
+#content div.show{
+	display: block;
+}
+</style>
+</head>
+<body>
+<ul id="ul">
+	<li class="current">php</li>
+	<li>ruby</li>
+	<li>python</li>
+</ul>
+<div id="content">
+	<div class="show">php。。。。。。介绍</div>
+	<div>ruby。。。。。。介绍</div>
+	<div>python。。。。。。介绍</div>
+</div>
+<script type="text/javascript">
+var ul = document.getElementById('ul');
+var li = ul.getElementsByTagName('li');
+var div = document.getElementById('content').getElementsByTagName('div');
+
+for(var i=0,len=li.length;i<len;i++){
+	li[i].index = i;
+	li[i].onclick = function (){
+			for(var i=0,len=li.length;i<len;i++){
+				li[i].className = null;
+				div[i].className = null;
+			}
+			this.className = 'current';
+			// alert(this.index);
+			div[this.index].className = 'show';
+		}
+}
+
+</script>
+</body>
+</html>
