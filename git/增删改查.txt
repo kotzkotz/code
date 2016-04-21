@@ -1,0 +1,23 @@
+增加文件：
+	git add README.md
+删除文件：
+	git rm a.html
+增删改：
+	git add .
+查看当前分支和另一个分支的区别：
+	1）git diff branchName
+	2）git diff branch1 branch2
+	使用第一种方式比较时，如果当前工作目录中存在与branchName同名的文件，系统则会提示错误，要是指明要比较的是文件还是分支。
+	比较两个分支的文件差异：
+    git diff <branchA>:<fileA> <branchB>:<fileB>
+    列出所有的树对象：
+    git ls-tree -r master
+
+	git diff commit1 commit2
+
+
+
+
+
+提交到本地库：git commit -am "增加文件"
+把你的内容推送到“origin”的“master（主线）”分支，即提交到远程库（"-f"是强制提交，不建议使用）：git push -u origin master

@@ -1,0 +1,18 @@
+查看本地分支：git branch
+查看远程分支：git branch -r
+查看所有（本地和远程）分支：git branch -a
+在本地库创建新的分支（往分支提交一次信息远程才会显示）：git branch 分支名
+切换分支：git checkout 分支名
+分支重命名：git branch -m oldbranch newbranch
+删除branchname分支：git branch -d branchname 删除branchname分支
+
+
+
+把分支名里的内容合并到当前分支：git merge 分支名
+
+
+
+回滚：
+本地查看最后三次的提交：git log -l 3
+强制退到某次提交（此次之后的提交记录都删除了）：git reset --hard commit
+回到某次提交，作为新的提交到服务器（此次之后的提交记录都在）：git revert commit

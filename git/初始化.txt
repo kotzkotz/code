@@ -1,0 +1,29 @@
+git的安装：
+windows安装
+安装命令行工具mysysgit https://git-for-windows.github.io/
+安装图形界面工具TortoiseGit https://download.tortoisegit.org/tgit/previews/
+代码比较工具:beyondCompare http://www.scootersoftware.com/download.php
+
+
+
+跟网站交互：
+第一种方法：
+到“https://github.com/settings/ssh”设置公钥，可以用“putty”软件计算。
+在程序中打开“pageant”，加载刚刚保存的私钥。
+第二种方法：
+ssh-keygen -t rsa -C "304400612@qq.com"
+然后一直回车
+
+
+
+初始化git：git init
+告诉git你的邮箱：git config --global user.email "youremail@qq.com"
+告诉git你的名字：git config --global user.name "yourname"
+为你的远程地址起个“origin”的别名：
+每次都需要输入用户名密码：git remote add origin https://github.com/pernotes/code.git
+如果做了网站交互可以用ssh协议：git remote add origin git@github.com:pernotes/code.git
+删除远程地址“origin”别名：git remote rm origin
+查看本地配置项：git remote -v
+git状态：git status
+从远程库下载：git pull
+复制别人的代码：git clone git@github.com:pernotes/code.git
