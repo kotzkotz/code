@@ -27,4 +27,11 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ccc.html index.php
 
+
+#301跳转
+RewriteCond %{HTTP_HOST} !(^www\.chleglass\.com$) [NC]
+RewriteRule ^(.*)$ http://www.chleglass.com/$1 [L,R=301]
+
+#404跳转
+ErrorDocument 404 /404.php
 </IfModule>
