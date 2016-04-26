@@ -1,21 +1,29 @@
 apache：
-配置文件：find / -name httpd.conf
+配置文件：
+ps aux | grep httpd
+find / -name httpd.conf
 service httpd start 启动
 service httpd restart 重新启动
 service httpd stop 停止服务
 
 
-nginx配置文件：find / -name nginx.conf
+nginx配置文件：
+ps aux | grep nginx
+find / -name nginx.conf
 停止nginx：nginx -s quit
 开启nginx：/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 
 
-php配置文件：find / -name php.ini
+php配置文件：
+ps aux | grep php
+find / -name php.ini
 
 
 
 
-mysql配置文件：find / -name my.ini -o -name my.cnf
+mysql配置文件：
+ps aux | grep mysqld
+find / -name my.ini -o -name my.cnf
 
 
 
