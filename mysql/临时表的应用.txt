@@ -1,0 +1,48 @@
+MySQL如何使用临时表
+ 
+【临时表存储】
+MySQL临时表分为“内存临时表”和“磁盘临时表”，其中内存临时表使用MySQL的MEMORY存储引擎，磁盘临时表使用MySQL的MyISAM存储引擎；
+一般情况下，MySQL会先创建内存临时表，但内存临时表超过配置指定的值后，MySQL会将内存临时表导出到磁盘临时表。  www.2cto.com  
+ 
+【使用临时表的场景】
+1）ORDER BY子句和GROUP BY子句不同，
+例如：ORDERY BY price GROUP BY name；
+ 
+2）在JOIN查询中，ORDER BY或者GROUP BY使用了不是第一个表的列
+例如：SELECT * from TableA, TableB ORDER BY TableA.price GROUP by TableB.name
+ 
+3）ORDER BY中使用了DISTINCT关键字
+ORDERY BY DISTINCT(price)
+ 
+4）SELECT语句中指定了SQL_SMALL_RESULT关键字
+SQL_SMALL_RESULT的意思就是告诉MySQL，结果会很小，请直接使用内存临时表，不需要使用索引排序
+SQL_SMALL_RESULT必须和GROUP BY、DISTINCT或DISTINCTROW一起使用
+一般情况下，我们没有必要使用这个选项，让MySQL服务器选择即可。
+ 
+【直接使用磁盘临时表的场景】
+1）表包含TEXT或者BLOB列；
+2）GROUP BY 或者 DISTINCT 子句中包含长度大于512字节的列；
+3）使用UNION或者UNION ALL时，SELECT子句中包含大于512字节的列；
+  www.2cto.com  
+【临时表相关配置】
+tmp_table_size：指定系统创建的内存临时表最大大小；
+http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_tmp_table_size
+ 
+max_heap_table_size: 指定用户创建的内存表的最大大小；
+http://dev.mysql.com/doc/refman/5.1/en/server-system-variables.html#sysvar_max_heap_table_size
+ 
+注意：最终的系统创建的内存临时表大小是取上述两个配置值的最小值。
+ 
+【表的设计原则】
+使用临时表一般都意味着性能比较低，特别是使用磁盘临时表，性能更慢，因此我们在实际应用中应该尽量避免临时表的使用。
+如果实在无法避免，也应该尽量避免使用磁盘临时表。
+ 
+常见的方法有：
+1）创建索引：在ORDER BY或者GROUP BY的列上创建索引，这样可以避免使用临时表；
+2）分拆很长的列，可以避免使用磁盘临时表：一般情况下，TEXT、BLOB，大于512字节的字符串，基本上都是为了显示信息，而不会用于查询条件，因此表设计的时候，应该将这些列独立到另外一张表。  www.2cto.com  
+ 
+【如何判断使用了临时表】
+使用explain查看执行计划，Extra列看到Using temporary就意味着使用了临时表。
+ 
+MySQL官方手册：
+http://dev.mysql.com/doc/refman/5.1/en/internal-temporary-tables.html

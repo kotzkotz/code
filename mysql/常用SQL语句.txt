@@ -1,0 +1,208 @@
+1,连接服务器:Mysql -h localhost -uUserName -pPassWd;
+2,选择字符集:Set names gbk;
+3,查看所有的库:Show databases;
+4,选择数据库:use 数据库名;
+5,创建数据库:create database 数据库名;
+6,删除数据库:drop database 数据库名;
+7,查看库下面的所有表: show  tables;
+8,创建数据表:
+	create table 表名 (
+	snum int not null default 0,
+	sname varchar(10)
+	)engine myisam charset utf8;
+9,删除数据表:drop table 表名;
+10,修改表名:rename table 旧表名 to 新表名;
+11,清空表数据:truncate 表名;
+12,查看表结构:desc 表名;
+13,查看建表语句:show create table 表名;
+14,增加:insert into 表名(列1,列2,列3...) values (值1,值2,值3...);
+15,修改:update 表名 set 列1=新值1,列2=新值2,列3=新值3 where expr;
+16,删除:delete from 表名 where expr;
+17,查找:select 列1,列2,列3 from 表名 where expr;
+
+	例:select 列1,列2 from 表名A (left join)/union select 列1,列2 from 表名B where expr group by 列1 having expr order by 列1 asc/desc limit 10
+
+18,增加列:alter table 表名 add 列名称 列类型 列参数;
+19,修改列:alter table 表名 modify 列名 新类型 新参数;
+20,删除列:alter table 表名 drop 列名;
+
+
+
+
+
+
+
+经典例题:
+------------------------------------------------------------------
++------+---------+-------+
+| name | subject | score |
++------+---------+-------+
+| 张三 | 数学    |    90 |
+| 张三 | 语文    |    50 |
+| 张三 | 地理    |    40 |
+| 李四 | 语文    |    55 |
+| 李四 | 政治    |    45 |
+| 王五 | 政治    |    30 |
++------+---------+-------+
+要求:查询出2门及2门以上不及格者的平均成绩
+
+
+select name,sum(score < 60) as gk ,avg(score) as pj from stu group by name having gk >=2;
+-----------------------------------------------------------------
+Match的hostTeamID与guestTeamID都与Team中的teamID关联
+查出 2006-6-1 到2006-7-1之间举行的所有比赛，并且用以下形式列出：
+拜仁  2：0 不来梅 2006-6-21
+
+mysql> select * from m;
++-----+------+------+------+------------+
+| mid | hid  | gid  | mres | matime     |
++-----+------+------+------+------------+
+|   1 |    1 |    2 | 2:0  | 2006-05-21 |
+|   2 |    2 |    3 | 1:2  | 2006-06-21 |
+|   3 |    3 |    1 | 2:5  | 2006-06-25 |
+|   4 |    2 |    1 | 3:2  | 2006-07-21 |
++-----+------+------+------+------------+
+mysql> select * from t;
++------+----------+
+| tid  | tname    |
++------+----------+
+|    1 | 国安     |
+|    2 | 申花     |
+|    3 | 公益联队 |
++------+----------+
+
+select team1.teamName as hname,matchResult,team2.teamName as gname,matchTime from bisai left join team as team1 on bisai.hostteamid = team1.teamID left join team as team2 on bisai.guestteamid = team2.teamID where matchTime>'2006-6-1' and matchTime<'2006-7-1';
+-------------------------------------------------------------------------
+A表:
++------+------+
+| id   | num  |
++------+------+
+| a    |    5 |
+| b    |   10 |
+| c    |   15 |
+| d    |   10 |
++------+------+
+
+B表:
++------+------+
+| id   | num  |
++------+------+
+| b    |    5 |
+| c    |   15 |
+| d    |   20 |
+| e    |   99 |
++------+------+
+
+create table a (
+id char(1),
+num int
+)engine myisam charset utf8;
+
+insert into a values ('a',5),('b',10),('c',15),('d',10);
+
+create table b (
+id char(1),
+num int
+)engine myisam charset utf8;
+
+insert into b values ('b',5),('c',15),('d',20),('e',99);
+
+
+mysql> select * from ta 
+    -> union all
+    -> select * from tb;
++------+------+
+| id   | num  |
++------+------+
+| a    |    5 |
+| b    |   10 |
+| c    |   15 |
+| d    |   10 |
+| b    |    5 |
+| c    |   15 |
+| d    |   20 |
+| e    |   99 |
++------+------+
+
+要求查询出以下效果:
++------+----------+
+| id   | sum(num) |
++------+----------+
+| a    |        5 |
+| b    |       15 |
+| c    |       30 |
+| d    |       30 |
+| e    |       99 |
++------+----------+
+
+参考答案:
+select id,sum(num) from (select * from ta union all select * from tb) as tmp group by id; 
+-------------------------------------------------------------------------------
+给每一个商品生成一个5到15元之间的随机红包,购买随机赠送红包
+select floor(rand()*10+5);
+select goods_id,goods_name,floor(rand()*10+5) as bonus from goods;
+-------------------------------------------------------------------------------
+某网站有email字段,存邮件地址,想调查163,126,qq,gmail邮箱的比例
+select *,right(email,length(email)-position('@' in email)) from test14;
+-------------------------------------------------------------------------------
+按周统计加班时间
+select sum(num),week(dt) as wk from jiaban group by wk
+-------------------------------------------------------------------------------
+现在性别是数字表示,能否显示出男/女/春,这3个中文给客户看,即 要做判断1->男,0->女,2->春
+select sname,
+case gender
+when 1
+then '男'
+when 0
+then '女'
+else '春'
+end as xingbie
+from test15;
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

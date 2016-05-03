@@ -1,0 +1,7 @@
+查看创建数据表语句：
+1、desc 数据表; 
+2、show create table 数据表;  
+3、use information_schema;select * from columns where table_name='数据表';
+
+复制数据表数据到另一个数据表：
+insert into 数据库.数据表 select * from 数据库.数据表;
