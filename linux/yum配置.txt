@@ -6,5 +6,9 @@ uname -a
 2，下载163yum源，下载地址：http://mirrors.163.com/.help/centos.html
 wget http://mirrors.163.com/.help/CentOS5-Base-163.repo
 
+
+
 查看某个软件是否安装：rpm -qa （| grep） matlab
+
+
 
