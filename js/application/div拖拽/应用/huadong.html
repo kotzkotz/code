@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Sortable - Handle empty lists</title>
+  <link rel="stylesheet" href="./jquery-ui.css">
+  <script src="./jquery-1.10.2.js"></script>
+  <script src="./jquery-ui.js"></script>
+  <style>
+  #sortable1, #sortable2, #sortable3 { list-style-type: none; margin: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
+  #sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+  .reanod_sortable{background: red;height:30px;}
+  </style>
+  <script>
+
+  $(function() {
+    $( "#sortable1,#sortable2,#sortable3").sortable();
+    $( "#sortable1,#sortable2,#sortable3").sortable({
+      connectWith: ["#sortable1,#sortable2,#sortable3"],
+      dropOnEmpty: false,
+      placeholder: "reanod_sortable",
+      cursor: "move",
+      tolerance: "pointer",
+      stop: function (event,ui){
+        var reanod = $(this).sortable("serialize");
+        console.log('stop',reanod);
+      },
+      update:function (){
+        var reanod = $(this).sortable("serialize");
+        console.log('update',reanod);
+      },
+      receive: function (){
+        var reanod = $(this).sortable("serialize");
+        console.log('receive',reanod);
+      }
+    }).disableSelection();
+  });
+  </script>
+</head>
+<body>
+ 
+<ul id="sortable1">
+  <li id="a_11" class="ui-state-default">Can be dropped..</li>
+  <li id="a_12" class="ui-state-default">..on an empty list</li>
+  <li id="a_13" class="ui-state-default">Item 11</li>
+  <li id="a_14" class="ui-state-default">Item 12</li>
+  <li id="a_15" class="ui-state-default">Item 13</li>
+</ul>
+ 
+<ul id="sortable2">
+  <li id="a_21" class="ui-state-highlight">Cannot be dropped..</li>
+  <li id="a_22" class="ui-state-highlight">..on an empty list</li>
+  <li id="a_23" class="ui-state-highlight">Item 22</li>
+  <li id="a_24" class="ui-state-highlight">Item 23</li>
+  <li id="a_25" class="ui-state-highlight">Item 24</li>
+</ul>
+<ul id="sortable3">
+  <li id="a_31" class="ui-state-highlight">Item 31</li>
+  <li id="a_32" class="ui-state-highlight">Item 32</li>
+</ul>
+
+<br style="clear:both">
+
+</body>
+</html>
