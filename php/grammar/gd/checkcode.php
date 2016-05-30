@@ -1,15 +1,6 @@
 <?php
-require dirname(__FILE__).'/include/common.inc.php';
 
 session_start();
-
-
-$width  	= isset($_GET['width'])?$_GET['width']:64;
-$height 	= isset($_GET['height'])?$_GET['height']:20;
-$num 		= isset($_GET['num'])?$_GET['num']:4;
-$size 		= isset($_GET['size'])?$_GET['size']:14;
-$padbtm 	= isset($_GET['padbtm'])?$_GET['padbtm']:$height-5;
-$padlf 		= isset($_GET['padlf'])?$_GET['padlf']:5;
 
 $enablegd = 1;
 $funcs = array('imagecreatetruecolor','imagecolorallocate','imagefill','imageline','imagedestroy','imagecolorallocatealpha','imageellipse','imagepng');
