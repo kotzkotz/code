@@ -1,0 +1,143 @@
+#yum安装必须软件
+yum install kernel-headers kernel-devel gcc*
+
+#查看usb无线网卡的型号
+lsusb
+
+#查看系统型号
+uname -a
+
+
+#下载对应驱动
+#make: *** /lib/modules/2.6.32-504.el6.i686/build: 没有那个文件或目录。
+#如果报错，则到相应的目录下建立软连接
+ln -s ./2.6.32-642.el6.i686 ./2.6.32-504.el6.i686
+
+#重启
+reboot
+
+
+#查看8192cu.ko是否已经安装
+modprobe -l | grep 8192cu.ko
+
+#加载模块
+modprobe 8192cu
+insmod 8192cu.ko
+
+#查看是否加载成功
+lsmod | grep 8192cu
+
+
+
+
+#root可以用以下命令重启命令
+shutdown -r now 立刻重启(root用户使用)
+shutdown -r 10 过10分钟自动重启(root用户使用)
+shutdown -r 20:35 在时间为20:35时候重启(root用户使用)
+#关机
+halt      立刻关机
+poweroff  立刻关机
+shutdown -h now 立刻关机(root用户使用)
+shutdown -h 10 10分钟后自动关机
+
+
+
+
+
+
+
+
+
+
+
+
+********************未测试*************************************
+Linux 版本
+#uname -a
+
+Linux zy-laptop 2.6.28-11-generic #42-Ubuntu SMP Fri Apr 17 01:57:59 UTC 2009 i686 GNU/Linux
+
+ 
+
+1. 插入USB网卡后,
+# lsusb
+....
+Bus 005 Device 003: ID 0fe6:8101
+....
+
+2. 解压dm9601.tgz
+
+# tar xzvf dm9601-2.6.tgz
+# ls dm9601-2.6
+dm9601.c  dm9601.h  Makefile  readme.txt
+
+
+3. 尝试编译
+
+# cd dm9601-2.6
+# make
+make -C /lib/modules/2.6.28-11-generic/build M=/root/dm9601-2.6 LDDINCDIR=/root/dm9601-2.6/../include modules
+make[1]: Entering directory `/usr/src/linux-headers-2.6.28-11-generic'
+scripts/Makefile.build:46: *** CFLAGS was changed in "/root/dm9601-2.6/Makefile". Fix it to use EXTRA_CFLAGS.  Stop.
+make[1]: *** [_module_/root/dm9601-2.6] Error 2
+make[1]: Leaving directory `/usr/src/linux-headers-2.6.28-11-generic'
+make: *** [default] Error 2
+
+ 
+
+4. 修改 dm9601.h
+
+# vim dm9601.h
+在最后添加下面两行
+
+DM9601_DEV( "SUNRISING USB Ethernet", 0x0fe6, 0x8101,
+                DEFAULT_GPIO_RESET )
+
+ 
+
+5. 编辑Makefile
+# vim Makefile
+
+将CFLAGS修改为EXTRA_CFLAGS
+
+ 
+
+6. 编辑dm9601.c
+# vim dm9601.c
+将#include<linux/config.h> 修改为#include<linux/autoconf.h>
+
+ 
+
+7. 开始编译
+#make
+此时,还有几个警告,不管它,最后会生成dm9601.ko
+
+#ls
+dm9601.c  dm9601.h  dm9601.ko  dm9601.mod.c  dm9601.mod.o  dm9601.o  Makefile  Module.markers  modules.order  Module.symvers  readme.txt
+
+
+8.将新生成的dm9601.ko覆盖掉当前内核的dm9601.ko
+
+#cp dm9601.ko /lib/modules/2.6.28-11-generic/kernel/drivers/net/usb/dm9601.ko
+
+不知为什么,开机dm9601.ko未启动。
+若重启机器后未启动(# lsmod|grep dm9601),手动加载dm9601.ko
+#insmod /lib/modules/2.6.28-11-generic/kernel/drivers/net/usb/dm9601.ko
+
+ 
+
+9. 配置USB网卡
+#vim /etc/network/interfaces
+
+auto eth1
+iface eth1 inet static
+address 192.168.1.2
+netmask 255.255.255.0
+gateway 192.168.1.1
+
+10. 为USB网卡配置MAC地址
+#ifconfig eth1 hw ether 01:23:45:67:89:ab
+
+
+11.激活USB网卡
+#ifconfig eth1 up
