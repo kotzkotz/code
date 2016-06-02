@@ -28,7 +28,7 @@ reboot
 #查看8192cu.ko是否已经安装
 modprobe -l | grep 8192cu.ko
 
-#加载模块
+#到linux系统模块目录加载模块（“find / -name 8192cu.ko”）
 modprobe 8192cu
 insmod 8192cu.ko
 
