@@ -1,11 +1,16 @@
 #yum安装必须软件
 yum install kernel-headers kernel-devel gcc*
 
-#查看usb无线网卡的型号
-lsusb
+#查看无线网卡的型号
+#usb无线网卡
+lsusb | grep WLAN
+#内置无线网卡
+lspci | grep Network
 
 #查看系统型号
 uname -a
+#所有版本信息
+lsb_release -a 或 cat /proc/version
 
 
 #下载对应驱动
@@ -13,7 +18,10 @@ uname -a
 #如果报错，则到相应的目录下建立软连接
 ln -s ./2.6.32-642.el6.i686 ./2.6.32-504.el6.i686
 
-#重启
+#
+#yum install kernel
+
+#安装完成后重启
 reboot
 
 
@@ -24,11 +32,23 @@ modprobe -l | grep 8192cu.ko
 modprobe 8192cu
 insmod 8192cu.ko
 
+#如果加载失败查看详细信息
+dmesg | tail
+#查看依赖信息
+modinfo ./8192cu.ko | grep depend
+#错误信息：Unknown symbol wireless_send_event
+#进入内核目录“/usr/src/linux”（没有的话到“https://www.kernel.org/pub/linux/kernel/”下载，并执行“make mrproper”）
+#运行make menuconfig（错误1：[scripts/kconfig/dochecklxdialog] 错误2：[menuconfig]。查看是否安装ncurses-devel：“rpm -q ncurses-devel”，没有的话需要安装并且和ncurses的版本一直“rpm -q ncurses”，rpm -ivh 文件名）
+#选择【device driver】→【Networking support】→【Wireless LAN】→【Wireless LAN drivers & Wireless Extensions】，重新编译内核即可(make && make modules_install && make install)
+
 #查看是否加载成功
 lsmod | grep 8192cu
 
+#查看是否启用
+ifconfig
 
-
+#扫描无线网络
+iwlist  scanning
 
 #root可以用以下命令重启命令
 shutdown -r now 立刻重启(root用户使用)
