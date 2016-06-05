@@ -1,0 +1,29 @@
+启动sshd服务（启动后可用SecureCRT链接）：service sshd start
+1，查看当前linux版本
+lsb_release -a
+uname -a
+
+2，下载163yum源，下载地址：http://mirrors.163.com/.help/centos.html
+wget http://mirrors.163.com/.help/CentOS5-Base-163.repo
+
+查看某个软件是否安装：rpm -qa （| grep） matlab
+
+#查看prce的各个版本：
+yum list prce
+#安装指定版本号
+yum install -y pcre-7.8-6.el6.i686
+
+#卸载一个软件
+yum -y remove httpd
+#卸载多个相类似的软件
+yum -y remove httpd*
+#卸载多个非类似软件时
+yum -y remove httpd php mysql
+
+
+
+
+
+
+
+

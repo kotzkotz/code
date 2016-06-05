@@ -28,7 +28,7 @@ setenforce 0 设置SELinux 成为permissive模式
 #service iptables start
 
 
-#apache
+#apache 2.2
 #yum -y install zlib
 wget http://mirrors.tuna.tsinghua.edu.cn/apache/httpd/httpd-2.4.20.tar.bz2
 tar -jxvf httpd-2.4.20.tar.bz2
@@ -39,22 +39,20 @@ cd httpd-2.4.20
 --enable-mods-shared=all \
 --enable-so
 
-
+#apache 2.4
+#error: APR not found. Please read the documentation
+#http://www.cnblogs.com/Anker/p/3355573.html
 ./configure --prefix=/usr/local/http2  \
 --enable-modules=all \
 --enable-rewrite \
 --enable-mods-shared=all \
+--enable-so \
 --with-apr=/usr/local/apr \
---with-apr-util=/usr/local/web/apr-util \
---with-pcre=/usr/local/pcre \
---enable-so
-
-
-
-
-#error: APR not found. Please read the documentation
-#http://www.cnblogs.com/Anker/p/3355573.html
-
+--with-apr-util=/usr/local/apr-util \
+--with-pcre=/usr/local/pcre 
 
 make && make install
 /usr/local/http2/bin/apachectl start
+
+#mysql 5.5
+
