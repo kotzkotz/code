@@ -1,0 +1,3 @@
+#查看ftp是否安装 “rpm -q vsftpd”
+#安装ftp软件
+#yum install -y ftp
