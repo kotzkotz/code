@@ -28,8 +28,9 @@ find / -name my.ini -o -name my.cnf
 
 
 
-
-
+查看端口
+netstat -ntlp | grep 80
+kill 17526
 
 
 
