@@ -120,3 +120,35 @@ make && make install
 #php安装
 wget http://cn2.php.net/distributions/php-5.4.33.tar.gz
 tar -xzvf php-5.4.33.tar.gz
+./configure --prefix=/usr/local/php \
+--with-apxs2=/usr/local/http2/bin/apxs \
+--with-mysql=mysqlnd \
+--with-pdo-mysql=mysqlnd \
+--with-mysqli=mysqlnd \
+--with-freetype-dir=/usr/local/freetype \
+--with-gd=/usr/local/gd \
+--with-zlib --with-libxml-dir=/usr/local/libxml2 \
+--with-jpeg-dir=/usr/local/jpeg \
+--with-png-dir \
+--enable-mbstring=all \
+--enable-mbregex \
+--enable-shared 
+
+
+
+
+
+
+./configure --prefix=/usr/local/php \
+--with-apxs2=/usr/local/http2/bin/apxs \
+--with-mysql=mysqlnd \
+--with-pdo-mysql=mysqlnd \
+--with-mysqli=mysqlnd \
+--with-freetype-dir=/usr/share/doc/freetype-2.3.11 \
+--with-gd=/usr/local/gd \
+--with-zlib --with-libxml-dir=/usr/local/libxml2 \
+--with-jpeg-dir=/usr/local/jpeg \
+--with-png-dir \
+--enable-mbstring=all \
+--enable-mbregex \
+--enable-shared 
