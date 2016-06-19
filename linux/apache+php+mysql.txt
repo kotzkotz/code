@@ -71,6 +71,8 @@ wget http://mirrors.sohu.com/mysql/MySQL-5.5/mysql-5.5.50.tar.gz
 
 tar -xzvf mysql-5.5.50-linux2.6-i686.tar.gz
 #mysql 5.5
+#安装cmake
+#yum -y install cmake
 cmake -DMYSQL_USER=mysql \
 -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DINSTALL_DATADIR=/usr/local/mysql/data \
@@ -107,13 +109,72 @@ cmake -DMYSQL_USER=mysql \
 -DWITH_PARTITION_STORAGE_ENGINE=1 //安装数据库分区
 -DINSTALL_PLUGINDIR=/usr/local/mysql/plugin //插件文件及配置路径
 
-#mysql 5.1
-./configure --prefix=/usr/local/mysql \
---with-charset=utf8 \
---with-extra-charsets=gbk,gb2312,binary
-
 make && make install
-#mysql 初始化详见linux环境安装
+
+#mysql初始化
+
+#添加mysql用户组
+groupadd mysql
+
+#创建mysql用户并归属于mysql组
+useradd  -g mysql mysql
+
+#复制数据库配置文件（my-medium.cnf表示数据量级为中等）
+cp support-files/my-medium.cnf /etc/my.cnf
+#复制启动文件
+cp support-files/mysql.server /etc/init.d/mysqld
+
+#递归的把当前文件改为mysql用户跟组，如果启动失败从这步重新开始
+cd /usr/local/mysql
+chown -R mysql.mysql .
+
+#修改 mysql 的配置 my.cnf 
+vi /etc/my.cnf
+#在[mysqld]下面添加 
+basedir = /usr/local/mysql
+datadir = /usr/local/mysql/data
+log-error = /usr/local/mysql/mysql_error.log
+pid-file = /usr/local/mysql/data/mysql.pid
+default-storage-engine=MyISAM
+user = mysql
+
+#创建mysql测试数据库和系统的数据库（正常的是生成5个文件）
+/usr/local/mysql/scripts/mysql_install_db \
+--user=mysql \
+--basedir=/usr/local/mysql \
+--datadir=/usr/local/mysql/data
+
+#把当前目录文件的主人都改为root，避免数据库恢复为出厂设置。
+chown -R root .
+
+#将 mysql 加入开机启动 
+chmod +x /etc/init.d/mysqld
+#编辑此文件，查找并修改以下变量内容：
+vi /etc/init.d/mysqld
+basedir=/usr/local/mysql
+datadir=/usr/mysql/data
+
+#增加系统服务
+chkconfig --add mysqld 
+#设置运行级别
+chkconfig --level 345 mysqld on
+
+#为MySQL配置环境变量，以后使用起来方便 
+export PATH=/usr/local/mysql/bin:$PATH
+
+#启动mysql服务
+service mysqld start 
+
+#查看mysql是否启动成功
+ps -A | grep mysql
+
+#设置密码 
+mysql_secure_installation
+
+#测试数据库
+bin/mysql –u root -p
+show databases;	
+
 
 
 
