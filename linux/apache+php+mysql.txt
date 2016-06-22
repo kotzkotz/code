@@ -181,6 +181,14 @@ show databases;
 #php安装
 wget http://cn2.php.net/distributions/php-5.4.33.tar.gz
 tar -xzvf php-5.4.33.tar.gz
+#安装依赖软件
+#rpm -qa | grep freetype
+yum -y install freetype freetype-devel
+yum -y install gd gd-devel
+yum -y install libxml2 libxml2-devel
+yum -y install libjpeg libjpeg-devel
+yum -y install libpng libpng-devel
+
 ./configure --prefix=/usr/local/php \
 --with-apxs2=/usr/local/http2/bin/apxs \
 --with-mysql=mysqlnd \
@@ -195,21 +203,23 @@ tar -xzvf php-5.4.33.tar.gz
 --enable-mbregex \
 --enable-shared 
 
+#安装
+make && make install
+
+#复制配置文件
+cp php.ini-development /usr/local/php/lib/php.ini
 
 
 
 
 
-./configure --prefix=/usr/local/php \
---with-apxs2=/usr/local/http2/bin/apxs \
---with-mysql=mysqlnd \
---with-pdo-mysql=mysqlnd \
---with-mysqli=mysqlnd \
---with-freetype-dir=/usr/share/doc/freetype-2.3.11 \
---with-gd=/usr/local/gd \
---with-zlib --with-libxml-dir=/usr/local/libxml2 \
---with-jpeg-dir=/usr/local/jpeg \
---with-png-dir \
---enable-mbstring=all \
---enable-mbregex \
---enable-shared 
+
+
+
+
+
+
+
+
+
+
