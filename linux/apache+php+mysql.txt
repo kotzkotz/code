@@ -59,6 +59,68 @@ make && make install
 #拷贝apache配置文件
 cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd.conf.bak
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#将 apache 加入开机启动 
+chmod +x /etc/init.d/httpd
+#编辑此文件，查找并修改以下变量内容：
+vi /etc/init.d/httpd
+apachectl=/usr/sbin/apachectl
+
+#增加系统服务
+chkconfig --add mysqld 
+#设置运行级别
+chkconfig --level 345 mysqld on
+
+#为MySQL配置环境变量，以后使用起来方便 
+export PATH=/usr/local/mysql/bin:$PATH
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #mysql 5.5
 #查看是否有就得mysql
 rpm -qa | grep mysql
@@ -209,12 +271,36 @@ make && make install
 #复制配置文件
 cp php.ini-development /usr/local/php/lib/php.ini
 
+#配置apache
+cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd2.conf.bak
+vi /usr/local/http2/conf/httpd.conf
+
+1)引入: "Include conf/extra/httpd-vhosts.conf"
+
+2)增加: "AddType application/x-httpd-php .php"	
+
+3)找到下面这段话:
+<IfModule dir_module>
+    DirectoryIndex index.html
+</IfModule>
+在index.html 前面添加index.php
+
+4)修改根目录
+DocumentRoot "/usr/local/http2/htdocs"
+<Directory "/usr/local/http2/htdocs">
+
+5)注释内部所有行 "extra/httpd-vhosts.conf"
 
 
+4)建立php测试网页
+vi /usr/local/apache2/htdocs/index.php	 
+输入如下内容:
+<?php
+phpinfo();
+?>
 
-
-
-
+5)重启apache
+shell> /usr/local/http2/bin/apachectl restart
 
 
 
