@@ -55,74 +55,31 @@ wget http://mirrors.tuna.tsinghua.edu.cn/apache/httpd/httpd-2.4.20.tar.bz2
 --with-pcre=/usr/local/pcre 
 
 make && make install
-/usr/local/http2/bin/apachectl start
 #拷贝apache配置文件
 cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd.conf.bak
+#启动apache
+/usr/local/http2/bin/apachectl start
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#将 apache 加入开机启动 
+#使用service httpd start 
+#复制一下启动文件
+cp /usr/local/http2/bin/apachectl /etc/rc.d/init.d/httpd
+#增加执行权限
 chmod +x /etc/init.d/httpd
-#编辑此文件，查找并修改以下变量内容：
-vi /etc/init.d/httpd
-apachectl=/usr/sbin/apachectl
+#apache加入开机启动
+打开 vi /etc/rc.d/init.d/httpd 添加(#!/bin/sh下面)
+#chkconfig: 2345 10 90
+#description: Activates/Deactivates Apache Web Server
+ps:#必须有,2345是设为要启动的运行级别，10是启动优先级，90是杀死进程的优先级，谁优先谁先挂的意思。
 
 #增加系统服务
-chkconfig --add mysqld 
+chkconfig --add httpd 
 #设置运行级别
-chkconfig --level 345 mysqld on
-
-#为MySQL配置环境变量，以后使用起来方便 
-export PATH=/usr/local/mysql/bin:$PATH
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+chkconfig httpd on
+#重启apache
+service httpd restart
 
 #mysql 5.5
-#查看是否有就得mysql
+#查看是否有旧的mysql
 rpm -qa | grep mysql
 #删除旧的mysql
 rpm -e mysql-libs-5.1.73-7.el6.i686
@@ -208,6 +165,8 @@ user = mysql
 
 #把当前目录文件的主人都改为root，避免数据库恢复为出厂设置。
 chown -R root .
+#启动mysql
+bin/mysqld_safe --user=mysql &
 
 #将 mysql 加入开机启动 
 chmod +x /etc/init.d/mysqld
