@@ -1,0 +1,50 @@
+#安装依赖包
+yum -y install gcc make cmake autoconf libtool
+
+#安装libevent
+wget https://cloud.github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+tar zxvf libevent-2.0.21-stable.tar.gz
+cd libevent-2.0.21-stable
+./configure --prefix=/usr/local/libevent
+make && make install
+
+#解压memcached
+tar -xzvf memcached-1.4.27.tar.gz
+cd memcached-1.4.27
+#配置memcached
+./configure --prefix=/usr/local/memcached \
+--with-libevent=/usr/local/libevent
+#安装
+make && make install
+
+#启动
+/usr/local/memcached/bin/memcached -m 64 -p 11211 -u nobody -d
+
+#测试
+ps -A | grep memcached
+
+
+
+#php添加member扩展
+#到http://pecl.php.net/package-stats.php下载需要的扩展源码
+wget http://pecl.php.net/get/memcache-2.2.7.tgz
+#解压
+tar zxvf memcache-2.2.7.tgz
+#php扩展源码安装包是没有configure文件的
+cd memcache-2.2.7
+#在源码包目录根据当前php的版本动态的创建扩展的configure文件
+/usr/local/php/bin/phpize --with-php-config=/usr/local/php/bin/php-config
+#配置
+./configure -with-php-config=/usr/local/php/bin/php-config
+#安装
+make && make install
+
+#安装完会显示安装到的路径：Installing shared extensions:/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/
+#根据phpinfo找到正在使用的php.ini(Configuration File (php.ini) Path)
+
+#在php.ini里引入生成的.so扩展
+vi php.ini
+增加
+extension=/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/memcache.so
+#重启 apache
+service httpd restart
