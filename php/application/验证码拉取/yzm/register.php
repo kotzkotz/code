@@ -5,16 +5,16 @@ $str = uniqid();
 if($_POST){
 $data = array();
 $data['code'] = 'AF';
-$data['uname'] = '3233816752';
-$data['email'] = '3233816752@qq.com';
-$data['remail'] = '3233816752@qq.com';
-$data['passwd'] = '3233816752@qq.com';
-$data['repasswd'] = '3233816752@qq.com';
+$data['uname'] = '3233816751';
+$data['email'] = '3233816751@qq.com';
+$data['remail'] = '3233816751@qq.com';
+$data['passwd'] = '3233816751@qq.com';
+$data['repasswd'] = '3233816751@qq.com';
 $data['imgcode'] = $_POST['yzm'];
 
 $cookie_file=$_POST['cookie'];
 
-
+// $url = 'http://localhost/ceshi/yzm/2.php';
 $url = 'http://www.ec51.com/join.html';
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
