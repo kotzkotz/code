@@ -1,0 +1,48 @@
+#查看ftp是否安装 
+rpm -q vsftpd
+#安装ftp软件
+#ftp服务端
+yum -y install vsftpd
+#ftp客户端
+#yum -y install ftp
+#开启端口修改配置等操作参考word文档
+
+#如果对于selinux不是很熟悉或者问题无法得到解决，关闭selinux，也可让vsftp正常使用.
+#关闭方法：
+永久方法 – 需要重启服务器
+修改/etc/selinux/config文件中的SELINUX=enforcing改为SELINUX=disabled，然后重启服务器。
+临时方法 – 设置系统参数
+使用命令setenforce 0
+附：
+setenforce 1 设置SELinux 成为enforcing模式
+setenforce 0 设置SELinux 成为permissive模式
+#vsftpd错误日志“tail -f /var/log/secure”
+
+
+
+
+#关闭防火墙
+#service iptables stop
+#开启防火墙
+#service iptables start
+#重启防火墙
+#service iptables start
+
+#开机运行
+chkconfig --level 35 vsftpd on
+
+#关闭匿名用户登录
+vi /etc/vsftpd/vsftpd.conf
+修改为"anonymous_enable=NO"
+
+如果"chroot_local_user=YES",那么所有用户登录时都限制在自己的主目录("/etc/vsftpd/chroot_list"里的用户例外)，否则相反。
+
+#添加FTP账号(不能用于登录系统)，该账户路径默认指向自己的家目录
+useradd ftpadmin -s /sbin/nologin
+#指定路径
+useradd ftpadmin -s /sbin/nologin -d /home/www(指定访问的目录)
+#设置ftpadmin用户密码
+passwd ftpadmin
+
+#与intelnet时间同步
+ntpdate -u ntp.api.bz(NTP服务器:上海)
