@@ -1,0 +1,48 @@
+#VisualSVN=subversion+apache
+#安装subversion
+yum -y install subversion
+
+#创建svn版本库目录
+mkdir -p /var/svn/svnrepos1
+mkdir -p /var/svn/svnrepos2
+
+#创建版本库
+svnadmin create /var/svn/svnrepos1
+svnadmin create /var/svn/svnrepos2
+
+#进入conf目录（该svn版本库配置文件），authz文件是权限控制文件，passwd是帐号密码文件，svnserve.conf SVN服务配置文件
+cd conf
+
+#设置帐号密码,在[users]块中添加用户和密码，格式：帐号=密码，如dan=dan
+vi passwd
+
+#设置权限
+vi authz
+#在末尾添加如下代码：
+[/]
+dan=rw
+w=r
+#意思是版本库的根目录dan对其有读写权限，w只有读权限。
+
+#修改svnserve.conf文件
+vi svnserve.conf
+#打开下面的几个注释（并删除后面的空格）：
+anon-access = read #匿名用户可读
+auth-access = write #授权用户可写
+password-db = /var/svn/passwd #使用哪个文件作为账号文件
+authz-db = /var/svn/authz #使用哪个文件作为权限文件
+realm = /var/svn # 认证空间名，版本库所在目录（要写版本控制的上级目录）
+
+#启动svn版本库（要启动版本控制的上级目录，否则只能控制1个项目）
+svnserve -d -r /var/svn
+
+#防火墙允许3690端口
+vi /etc/sysconfig/iptables
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 3690 -j ACCEPT
+
+#重启防火墙
+/etc/init.d/iptables restart
+service iptables restart
+
+
+
