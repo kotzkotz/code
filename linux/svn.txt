@@ -46,3 +46,16 @@ service iptables restart
 
 
 
+#svn检出到test目录下
+svn checkout svn://192.168.1.66/svnrepos1 ./ecshop
+#svn与web同步
+cd /var/svn/svnrepos1/hooks/
+cp post-commit.tmpl post-commit
+vi post-commit
+#在末尾增加
+export LANG=en_US.UTF-8
+SVN=/usr/bin/svn #这里配置的是svn安装bin目录下的svn文件
+WEB=/home/www/ecshop #项目目录
+$SVN update $WEB --username woshimima --password woshimima --no-auth-cache
+#增加执行权限
+chmod 777 post-commit
