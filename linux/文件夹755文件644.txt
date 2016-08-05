@@ -1,0 +1,8 @@
+#文件夹权限是0755，文件权限是0644
+#方法一：
+chmod 0644 -R ./
+find ./ -type d -print|xargs chmod 0755;
+
+#方法二：
+find ./ -type d -print | xargs chmod 0755;
+find ./ -type f -print | xargs chmod 0644;
