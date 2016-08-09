@@ -4,7 +4,12 @@ Mysqldump可以导出
 
 导出:cmd控制台
 例1: 导出mugua库下面的表
-Mysqldump -u用户名 -p密码 库名 表1 表2 表3 > 地址/备份文件名称
+
+如果报：-- Warning: Skipping the data of table mysql.event. Specify the --events option explicitly.
+则需要加上：--events --ignore-table=mysql.events
+因为mysqldump默认是不备份事件表的，加了--events 才会备份
+
+Mysqldump --events --ignore-table=mysql.events -u用户名 -p密码 库名 表1 表2 表3 > 地址/备份文件名称
 导出的是建表语句及insert语句
 
 例2:如何导出一个库下面的所有表?
@@ -42,7 +47,8 @@ Mysql  -u用户名 -p密码 库名 < 表级备份文件地址
 
 改进：
 'mysqlboolshop.bat'的内容改成执行一个PHP文件：
-C:\AppServ\php5\php.exe C:\AppServ\www\dsbf.php
+linux: /usr/local/php/bin/php /test.php
+windows: C:\AppServ\php5\php.exe C:\AppServ\www\dsbf.php
 'dsbf.php'的内容是：
 <?php
 	//定时备份我们的数据库文件
