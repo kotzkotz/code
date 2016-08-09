@@ -60,7 +60,7 @@ wget http://mirrors.sohu.com/mysql/MySQL-5.5/mysql-5.5.50.tar.gz
 
 tar -xzvf mysql-5.5.50-linux2.6-i686.tar.gz
 #mysql 5.5
-#安装cmake
+#安装cmake，先试试不设置mysqld.sock，否则还要设置php的配置
 #yum -y install cmake
 cmake -DMYSQL_USER=mysql \
 -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
@@ -200,6 +200,13 @@ make && make install
 #复制配置文件
 cp php.ini-development /usr/local/php/lib/php.ini
 
+#如果连接不上数据库则需要配置php.ini中的值，值在数据库中输入status可以在UNIX socket中看到
+pdo_mysql.default_socket=/tmp/mysqld.sock
+mysql.default_socket = /tmp/mysqld.sock
+mysqli.default_socket =/tmp/mysqld.sock
+或者创建软连接
+ln -s /tmp/mysqld.sock /tmp/mysql.sock
+
 #配置apache
 cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd2.conf.bak
 vi /usr/local/http2/conf/httpd.conf
@@ -230,8 +237,6 @@ phpinfo();
 
 5)重启apache
 shell> /usr/local/http2/bin/apachectl restart
-
-
 
 
 
