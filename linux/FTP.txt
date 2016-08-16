@@ -6,6 +6,8 @@ yum -y install vsftpd
 #ftp客户端
 #yum -y install ftp
 #开启端口修改配置等操作参考word文档
+vi /etc/sysconfig/iptables
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT
 
 #如果对于selinux不是很熟悉或者问题无法得到解决，关闭selinux，也可让vsftp正常使用.
 #关闭方法：
@@ -37,6 +39,8 @@ vi /etc/vsftpd/vsftpd.conf
 
 如果"chroot_local_user=YES",那么所有用户登录时都限制在自己的主目录("/etc/vsftpd/chroot_list"里的用户例外)，否则相反。
 
+如果"userlist_deny=YES",则user_list("/etc/vsftpd/user_list")文件中存在的用户不允许登录FTP服务器（默认是YES）,否则相反。
+
 #添加ftp账号
 useradd ftpadmin -s /sbin/nologin(不能登录系统) -d /home/www(指定访问的目录) -g daemon(将用户分到apache的用户组)
 #设置ftpadmin用户密码
@@ -53,7 +57,12 @@ usermod -G daemon(组) ftpadmin(用户)
 #删除用户，加上 -r 参数，删除更彻底
 userdel -r lch
 
+#ftp上传的权限修改（最外层是777），local_umask的意思是：最大权限-值，如002的话（777-002）文件夹是775，文件是（666-002）664，022的话是文件夹是755，文件是644
+vi /etc/vsftpd/vsftpd.conf
+local_umask=002
 
+#重启vsftpd
+service vsftpd restart
 
 #与intelnet时间同步
 ntpdate -u ntp.api.bz(NTP服务器:上海)
