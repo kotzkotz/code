@@ -37,12 +37,23 @@ vi /etc/vsftpd/vsftpd.conf
 
 如果"chroot_local_user=YES",那么所有用户登录时都限制在自己的主目录("/etc/vsftpd/chroot_list"里的用户例外)，否则相反。
 
-#添加FTP账号(不能用于登录系统)，该账户路径默认指向自己的家目录
-useradd ftpadmin -s /sbin/nologin
-#指定路径
-useradd ftpadmin -s /sbin/nologin -d /home/www(指定访问的目录)
+#添加ftp账号
+useradd ftpadmin -s /sbin/nologin(不能登录系统) -d /home/www(指定访问的目录) -g daemon(将用户分到apache的用户组)
 #设置ftpadmin用户密码
 passwd ftpadmin
+
+
+
+#查看ftpadmin所属的分组
+groups ftpadmin
+#-g 改变主分组，把ftp用户（ftpadmin）分到apache组（daemon）
+usermod -g daemon(组) ftpadmin(用户)
+#-G 改变附加分组，把ftp用户（ftpadmin）分到apache组（daemon）
+usermod -G daemon(组) ftpadmin(用户)
+#删除用户，加上 -r 参数，删除更彻底
+userdel -r lch
+
+
 
 #与intelnet时间同步
 ntpdate -u ntp.api.bz(NTP服务器:上海)
