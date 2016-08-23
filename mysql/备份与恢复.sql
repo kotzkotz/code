@@ -39,11 +39,15 @@ Mysql  -u用户名 -p密码 库名 < 表级备份文件地址
 
 使用定时器来完成
 原理：
+windows：
 1，新建文件，必须以“.bat”结尾，如：'mysqlboolshop.bat'；
 内容：
 "C:\AppServ\MySQL\bin\mysqldump" -uroot -proot boolshop > d:\boolshop.bak
 注：如果地址名有空格的话必须用引号引起来
 2，控制面板-》任务计划-》添加任务计划
+
+linux：
+
 
 改进：
 'mysqlboolshop.bat'的内容改成执行一个PHP文件：
