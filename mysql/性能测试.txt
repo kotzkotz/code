@@ -1,13 +1,15 @@
 Sysbench测试CPU性能
 
+#安装依赖程序，报错之后再试
+#yum -y install automake libtool libtoolize mysql-devel
+
 安装：
-wget http://downloads.mysql.com/source/sysbench-0.4.12.10.tar.gz
+wget http://imysql.com/wp-content/uploads/2014/09/sysbench-0.4.12-1.1.tgz
 tar -xzvf sysbench-0.4.12.10.tar.gz
 cd sysbench-0.4.12.10
 ./autogen.sh
-
-# ./autogen.sh
-
+./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/include/mysql/ --with-mysql-libs=/usr/lib/mysql/
+make && make install
 
 
 
