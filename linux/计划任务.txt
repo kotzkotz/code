@@ -2,7 +2,6 @@
 service crond status
 
 #安装 crontab
-yum install vixie-cron
 yum install -y vixie-cron
 
 #看是否设置了开机自动启动
