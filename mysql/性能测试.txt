@@ -1,4 +1,12 @@
-<?php
+Sysbench测试CPU性能
+
+安装：
+wget http://downloads.mysql.com/source/sysbench-0.4.12.10.tar.gz
+tar -xzvf sysbench-0.4.12.10.tar.gz
+cd sysbench-0.4.12.10
+./autogen.sh
+
+# ./autogen.sh
 
 
 
@@ -9,12 +17,3 @@
 
 
 
-
-
-
-
-
-
-
-
-?>
