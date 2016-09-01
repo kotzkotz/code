@@ -105,14 +105,18 @@ update .....   4    2013-07-23 17:59:00
 insert ......   100       2013-07-23 19:57:00
 drop  ...        101    2013-07-23 20:57:00
 
-恢复的话可以这么写
-mysqlbinlog  --stop-datatime="2013-07-23 20:50:00" e:/mysqldb/logbin.000001
-上面这句的意思是 一直恢复到 2013-07-23 20:50:00  停止
-mysqlbinlog  --start-datatime="2013-07-23 20:50:00" e:/mysqldb/logbin.000001
-上面这句的意思是 从2013-07-23 20:50:00  开始恢复
+显示的话可以这么写：
+mysqlbinlog  --start-datetime="2013-07-23 20:50:00" e:/mysqldb/logbin.000001
+上面这句的意思是 一直显示到 2013-07-23 20:50:00  停止
+mysqlbinlog  --start-datetime="2013-07-23 20:50:00" e:/mysqldb/logbin.000001
+上面这句的意思是 从2013-07-23 20:50:00  开始显示
+直接恢复：
+D:\MySQL\bin\mysqlbinlog --start-datetime="2016-08-15 15:59:54" --stop-datetime="2016-09-01 9:58:00" D:\MySQL\bin\jl\log.000001 D:\MySQL\bin\jl\log.000002 | D:\MySQL\bin\mysql -uroot -p
+保存成sql，然后在通过“source sql文件”来恢复：
+D:\MySQL\bin\mysqlbinlog --start-datetime="2016-08-15 15:59:54" --stop-datetime="2016-09-01 9:58:00" D:\MySQL\bin\jl\log.000001 D:\MySQL\bin\jl\log.000002 > D:\skop.sql
 
 按照位置来恢复
-mysqlbinlog  --stop-position="100" e:/mysqldb/logbin.000001  | 
+mysqlbinlog  --stop-position="100" e:/mysqldb/logbin.000001  | mysql -uroot -p
 上面这个语句意思是 恢复到100的位置
 
 真实性恢复
