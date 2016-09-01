@@ -113,7 +113,7 @@ mysqlbinlog  --start-datetime="2013-07-23 20:50:00" e:/mysqldb/logbin.000001
 直接恢复：
 D:\MySQL\bin\mysqlbinlog --start-datetime="2016-08-15 15:59:54" --stop-datetime="2016-09-01 9:58:00" D:\MySQL\bin\jl\log.000001 D:\MySQL\bin\jl\log.000002 | D:\MySQL\bin\mysql -uroot -p
 保存成sql，然后在通过“source sql文件”来恢复：
-D:\MySQL\bin\mysqlbinlog --start-datetime="2016-08-15 15:59:54" --stop-datetime="2016-09-01 9:58:00" D:\MySQL\bin\jl\log.000001 D:\MySQL\bin\jl\log.000002 > D:\skop.sql
+D:\MySQL\bin\mysqlbinlog --start-datetime="2016-08-15 15:59:54" --stop-datetime="2016-09-01 9:58:00" D:\MySQL\bin\jl\log.000001 D:\MySQL\bin\jl\log.000002 > D:\zckop.sql
 
 按照位置来恢复
 mysqlbinlog  --stop-position="100" e:/mysqldb/logbin.000001  | mysql -uroot -p
