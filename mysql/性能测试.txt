@@ -1,16 +1,123 @@
 Sysbench测试CPU性能
 
+#安装mysql-devel,一般都需要
+#yum -y install mysql-devel
 #安装依赖程序，报错之后再试
-#yum -y install automake libtool libtoolize mysql-devel
+#yum -y install automake libtool libtoolize
 
 安装：
 wget http://imysql.com/wp-content/uploads/2014/09/sysbench-0.4.12-1.1.tgz
-tar -xzvf sysbench-0.4.12.10.tar.gz
+tar -xzvf sysbench-0.4.12-1.1.tgz
 cd sysbench-0.4.12.10
 ./autogen.sh
 ./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/include/mysql/ --with-mysql-libs=/usr/lib/mysql/
 make && make install
 
+测试：
+#测试fileio命令帮助：
+sysbench --test=fileio help
+
+参数详解：
+--file-num=N          代表生成测试文件的数量，默认为128。
+--file-block-size=N      测试时所使用文件块的大小，如果想磁盘针对innodb存储引擎进行测试，可以将其设置为16384，即innodb存储引擎页的大小。默认为16384。
+--file-total-size=SIZE     创建测试文件的总大小，默认为2G大小。
+--file-test-mode=STRING 文件测试模式，包含：seqwr(顺序写), seqrewr(顺序读写), seqrd(顺序读), rndrd(随机读), rndwr(随机写), rndrw(随机读写)。
+--file-io-mode=STRING   文件操作的模式，sync（同步）,async（异步）,fastmmap（快速mmap）,slowmmap（慢速mmap），默认为sync同步模式。
+--file-async-backlog=N   对应每个线程队列的异步操作数，默认为128。
+--file-extra-flags=STRING 打开文件时的选项，这是与API相关的参数。
+--file-fsync-freq=N      执行fsync()函数的频率。fsync主要是同步磁盘文件，因为可能有系统和磁盘缓冲的关系。 0代表不使用fsync函数。默认值为100。
+--file-fsync-all=[on|off]  每执行完一次写操作，就执行一次fsync。默认为off。
+--file-fsync-end=[on|off] 在测试结束时执行fsync函数。默认为on。
+--file-fsync-mode=STRING文件同步函数的选择，同样是和API相关的参数，由于多个操作系统对于fdatasync支持不同，因此不建议使用fdatasync。默认为fsync。
+--file-merged-requests=N 大多情况下，合并可能的IO的请求数，默认为0。
+--file-rw-ratio=N         测试时的读写比例，默认时为1.5，即可3：2。
+
+
+
+#测试cpu命令帮助：
+sysbench --test=cpu help
+
+参数详解：
+--cpu-max-prime=N      用来选项指定最大的素数，具体参数可以根据CPU的性能来设置，默认为10000
+
+
+
+#测试memory命令帮助：
+sysbench --test=memory help
+
+参数详解：
+--memory-block-size=SIZE      测试内存块的大小，默认为1K
+--memory-total-size=SIZE       数据传输的总大小，默认为100G
+--memory-scope=STRING       内存访问的范围，包括全局和本地范围，默认为global
+--memory-hugetlb=[on|off]     是否从HugeTLB池分配内存的开关，默认为off
+--memory-oper=STRING        内存操作的类型，包括read, write, none，默认为write
+--memory-access-mode=STRING 内存访问模式，包括seq,rnd两种模式，默认为seq
+
+
+
+#测试threads命令帮助：
+sysbench  --test=threads help
+
+参数详解：
+--thread-yields=N      指定每个请求的压力，默认为1000
+--thread-locks=N       指定每个线程的锁数量，默认为8
+
+
+
+测试mutex命令帮助：
+sysbench  --test=mutex help
+
+参数详解：
+--mutex-num=N    数组互斥的总大小。默认是4096
+--mutex-locks=N    每个线程互斥锁的数量。默认是50000
+--mutex-loops=N    内部互斥锁的空循环数量。默认是10000
+
+
+
+测试oltp命令帮助：
+sysbench --test=oltp help
+
+参数详解：
+--oltp-test-mode=STRING    执行模式{simple,complex(advanced transactional),nontrx(non-transactional),sp}。默认是complex
+--oltp-reconnect-mode=STRING 重新连接模式{session(不使用重新连接。每个线程断开只在测试结束),transaction(在每次事务结束后重新连接),query(在每个SQL语句执行完重新连接),random(对于每个事务随机选择以上重新连接模式)}。默认是session
+--oltp-sp-name=STRING   存储过程的名称。默认为空
+--oltp-read-only=[on|off]  只读模式。Update，delete，insert语句不可执行。默认是off
+--oltp-skip-trx=[on|off]   省略begin/commit语句。默认是off
+--oltp-range-size=N      查询范围。默认是100
+--oltp-point-selects=N          number of point selects [10]
+--oltp-simple-ranges=N          number of simple ranges [1]
+--oltp-sum-ranges=N             number of sum ranges [1]
+--oltp-order-ranges=N           number of ordered ranges [1]
+--oltp-distinct-ranges=N        number of distinct ranges [1]
+--oltp-index-updates=N          number of index update [1]
+--oltp-non-index-updates=N      number of non-index updates [1]
+--oltp-nontrx-mode=STRING   查询类型对于非事务执行模式{select, update_key, update_nokey, insert, delete} [select]
+--oltp-auto-inc=[on|off]      AUTO_INCREMENT是否开启。默认是on
+--oltp-connect-delay=N     在多少微秒后连接数据库。默认是10000
+--oltp-user-delay-min=N    每个请求最短等待时间。单位是ms。默认是0
+--oltp-user-delay-max=N    每个请求最长等待时间。单位是ms。默认是0
+--oltp-table-name=STRING  测试时使用到的表名。默认是sbtest
+--oltp-table-size=N         测试表的记录数。默认是10000
+--oltp-dist-type=STRING    分布的随机数{uniform(均匀分布),Gaussian(高斯分布),special(空间分布)}。默认是special
+--oltp-dist-iter=N    产生数的迭代次数。默认是12
+--oltp-dist-pct=N    值的百分比被视为'special' (for special distribution)。默认是1
+--oltp-dist-res=N    ‘special’的百分比值。默认是75
+
+
+
+
+
+
+
+
+
+#测试fileio：
+#创建初始化fileio文件：
+sysbench --test=fileio --file-num=16 --file-total-size=2G prepare
+#2147483648 bytes written in 21.91 seconds (93.49 MB/sec).
+ll -trhl
+#使用16个线程随机读进行测试结果如下：
+sysbench --test=fileio --file-total-size=2G --file-test-mode=rndrd --max-time=180 --max-requests=100000000 --num-threads=16 --init-rng=on --file-num=16 --file-extra-flags=direct --file-fsync-freq=0 --file-block-size=16384 run
 
 
 
