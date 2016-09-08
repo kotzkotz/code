@@ -1,4 +1,4 @@
-Sysbench测试CPU性能
+Sysbench测试性能
 
 #安装mysql-devel,一般都需要
 #yum -y install mysql-devel
@@ -109,20 +109,57 @@ sysbench --test=oltp help
 
 
 
+#硬件信息
+#cpu：32位1核1线程
+#查看位数
+getconf LONG_BIT
+#详细信息
+cat /proc/cpuinfo 
+参数说明：
+cpu cores   单个CPU逻辑物理核数
+physical id 单个CPU的标号，有几个就是有几个cpu
+core id     有几个就一共有多少核心数，个数等于单核核心数乘以几个cpu
+siblings    线程
+#MEM(内存)：1883MB
+cat /proc/meminfo | more #MemTotal是内存总数
+free -m
+top 
+#硬盘大小：230G
+df -lh
+cat /proc/partitions
+#硬盘转速：7200转/分
+yum -y install sg3_utils
+sginfo -l
+sg_vpd /dev/sg1 --page=0xb1
+
+
+
 
 
 #测试fileio：
 #创建初始化fileio文件：
-sysbench --test=fileio --file-num=16 --file-total-size=2G prepare
-#2147483648 bytes written in 21.91 seconds (93.49 MB/sec).
+sysbench --test=fileio --file-total-size=2G prepare
+#2147483648 bytes written in 31.16 seconds (65.73 MB/sec).
 ll -trhl
-#使用16个线程随机读进行测试结果如下：
-sysbench --test=fileio --file-total-size=2G --file-test-mode=rndrd --max-time=180 --max-requests=100000000 --num-threads=16 --init-rng=on --file-num=16 --file-extra-flags=direct --file-fsync-freq=0 --file-block-size=16384 run
+#接下来开始对这些文件进行测试：
+#随机读：
+sysbench --test=fileio --file-total-size=2G --file-test-mode=rndrd run
+#结果：
+Operations performed:  10000 reads, 0 writes, 0 Other = 10000 Total
+Read 156.25Mb  Written 0b  Total transferred 156.25Mb  (8.7031Mb/sec)
+557.00 Requests/sec executed
 
+#顺序读：
+sysbench --test=fileio --file-total-size=2G --file-test-mode=seqrd run
 
+#结果：
+Operations performed:  10000 reads, 0 writes, 0 Other = 10000 Total
+Read 156.25Mb  Written 0b  Total transferred 156.25Mb  (119.51Mb/sec)
+7648.79 Requests/sec executed
 
-
-
-
+通过上两例对比, 顺序读与随机读之间的速度,差了13倍（跟硬件，文件大小有关）!
+合理的索引+where语句会尽量达成顺序读.
+#删除第一步生成的测试文件
+sysbench --test=fileio cleanup
 
 
