@@ -8,7 +8,7 @@ Sysbench测试性能
 安装：
 wget http://imysql.com/wp-content/uploads/2014/09/sysbench-0.4.12-1.1.tgz
 tar -xzvf sysbench-0.4.12-1.1.tgz
-cd sysbench-0.4.12.10
+cd sysbench-0.4.12-1.1
 ./autogen.sh
 ./configure --prefix=/usr/local/sysbench --with-mysql-includes=/usr/include/mysql/ --with-mysql-libs=/usr/lib/mysql/
 make && make install
@@ -116,10 +116,10 @@ getconf LONG_BIT
 #详细信息
 cat /proc/cpuinfo 
 参数说明：
-cpu cores   单个CPU逻辑物理核数
-physical id 单个CPU的标号，有几个就是有几个cpu
+cpu cores   单个CPU逻辑物理核数（grep "core id" /proc/cpuinfo | sort -u | wc -l ）
+physical id 单个CPU的标号，有几个就是有几个cpu（grep "physical id" /proc/cpuinfo | sort -u | wc -l ）
 core id     有几个就一共有多少核心数，个数等于单核核心数乘以几个cpu
-siblings    线程
+siblings    线程（grep "processor" /proc/cpuinfo | sort -u | wc -l）
 #MEM(内存)：1883MB
 cat /proc/meminfo | more #MemTotal是内存总数
 free -m
@@ -163,3 +163,22 @@ Read 156.25Mb  Written 0b  Total transferred 156.25Mb  (119.51Mb/sec)
 sysbench --test=fileio cleanup
 
 
+
+#测试事务性能
+sysbench --test=/root/pakeage/sysbench-0.4.12-1.1/sysbench/tests/db/oltp.lua --mysql-table-engine=innodb \
+--mysql-user=root --mysql-password='root' --db-driver=mysql --mysql-db=test  \
+--oltp-table-size=30000 --mysql-socket=/tmp/mysqld.sock prepare
+
+sysbench --test=/root/pakeage/sysbench-0.4.12-1.1/sysbench/tests/db/oltp.lua --mysql-table-engine=innodb --mysql-user=root --mysql-password='root' --db-driver=mysql --mysql-db=test --oltp-table-size=30000 --mysql-socket=/tmp/mysqld.sock run > result.log
+
+#删除生成的测试数据
+sysbench --test=/root/pakeage/sysbench-0.4.12-1.1/sysbench/tests/db/oltp.lua --mysql-user=root --mysql-password='root' --mysql-socket=/tmp/mysqld.sock --mysql-db=test cleanup
+
+
+
+#测试CPU性能
+1线程查找20000以内的素数
+sysbench --test=cpu --cpu-max-prime=20000 --num-threads=1 run
+
+#内存测试测试了内存的连续读写性能。
+sysbench --test=memory --num-threads=2 --memory-block-size=8192 --memory-total-size=1g run
