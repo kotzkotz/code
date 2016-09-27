@@ -6,9 +6,11 @@ your_nginx_dir/sbin/nginx -v
 cat your_apache_dir/build/config.nice 
 #php编译参数： 
 your_php_dir/bin/php -i | grep configure 
-#mysql编译参数： 
+#mysql编译参数（查看cmake方式安装目前没找到）： 
 cat your_mysql_dir/bin/mysqlbug | grep -i configure 
-
+或者
+VISUAL=vim; export VISUAL
+mysqlbug
 
 
 查看配置文件：
