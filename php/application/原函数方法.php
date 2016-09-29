@@ -10,7 +10,7 @@
  * 类：			zc_dump('class',true);
  * 实例方法：	zc_dump(class,'method');
  * 静态方法：	zc_dump('class','method');
- * 文献：
+ * 文献：http://ee1.php.net/manual/zh/class.reflectionclass.php
  * 函数：
 	$function = new ReflectionFunction('function');
 	$filename = $function->getFileName();
