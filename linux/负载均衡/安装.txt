@@ -28,12 +28,25 @@ find / -name ipvsadm
 wget http://www.keepalived.org/software/keepalived-1.1.15.tar.gz
 tar -zxvf keepalived-1.1.15.tar.gz
 cd keepalived-1.1.15
-./configure --sysconf=/usr/local --with-kernel-dir=/usr/src/kernels/2.6.18-8.el5-i686（也可以直接运行"./configure"）
+./configure --sysconf=/usr/local/keepalived --with-kernel-dir=/usr/src/kernels/2.6.32-504.el6.i686（也可以直接运行"./configure"）
 make && make install
+
 #查看keepalived位置  
 find / -name keepalived
+
 #修改配置文件（find / -name keepalived.conf）
 vi /usr/local/etc/keepalived/keepalived.conf
+
+#BACKUP服务器同上配置，先安装lvs再按装keepalived。然后配置“keepalived.conf”，只需将“两处”标明“备份”的部分改一下即可。
+
+#建立服务启动脚本，以便使用service命令控制之 
+cp /usr/local/etc/rc.d/init.d/keepalived /etc/init.d/keepalived
+
+#如果报错/etc/sysconfig/keepalived: 没有那个文件或目录
+#cp /usr/local/etc/sysconfig/keepalived /etc/sysconfig/keepalived
+
+#启动keepalived服务，keepalived就能利用keepalived.conf 的配置文件，实现负载均衡和高可用.  整个LVS负均衡HA方案，由keepalived.conf一个文件即可搞定！
+service keepalived start
 
 
 
