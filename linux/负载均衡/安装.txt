@@ -1,0 +1,67 @@
+#ipvsadm(lvs)官方网站：http://www.linuxvirtualserver.org/
+#ipvsadm(lvs)中文官网：http://zh.linuxvirtualserver.org/
+#keepalived官方网站：http://www.keepalived.org/
+
+#确认内核支持ipvs
+modprobe -l | grep ipvs
+
+#安装依赖包
+yum -y install kernel-devel
+
+#查看依赖包是否存在
+rpm -q kernel-devel gcc gcc-c++ openssl openssl-devel popt popt-devel libnl | grep 'not installed'
+
+#创建软链接(使用的是变色的那个)
+ln -s /usr/src/kernels/2.6.32-504.el6.i686 /usr/src/linux
+
+#安装ipvsadm，完成负载均衡
+wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
+tar -zxvf ipvsadm-1.24.tar.gz
+cd ipvsadm-1.24
+make && make install
+#查看ipvsadm的位置
+find / -name ipvsadm
+
+
+
+#安装keepalived，完成高可用
+wget http://www.keepalived.org/software/keepalived-1.1.15.tar.gz
+tar -zxvf keepalived-1.1.15.tar.gz
+cd keepalived-1.1.15
+./configure --sysconf=/usr/local --with-kernel-dir=/usr/src/kernels/2.6.18-8.el5-i686（也可以直接运行"./configure"）
+make && make install
+#查看keepalived位置  
+find / -name keepalived
+#修改配置文件（find / -name keepalived.conf）
+vi /usr/local/etc/keepalived/keepalived.conf
+
+
+
+#虚拟IP地址，并设定其子网掩码为255.255.255.255，与Director Server上的虚拟IP保持互通，然后禁止了本机的ARP请求
+chmod a+x realserver.sh
+./realserver.sh start
+#发送到其它realserver，并执行
+rsync -av realserver.sh root@192.168.1.66:/root/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://blog.itpub.net/29754888/viewspace-1442730/
+http://blog.chinaunix.net/uid-26893610-id-3196774.html
+http://itindex.net/detail/42175-lvs
+
+
+
+
+
