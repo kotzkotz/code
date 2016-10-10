@@ -1,0 +1,49 @@
+#官方网站：http://www.linuxvirtualserver.org/
+#中文官网：http://zh.linuxvirtualserver.org/
+
+#yum安装方式
+yum -y install ipvsadm
+
+
+
+#确认内核支持ipvs
+modprobe -l | grep ipvs
+
+#安装依赖包
+yum -y install kernel-devel gcc gcc-c++
+
+#查看依赖包是否存在
+rpm -q kernel-devel
+rpm -q gcc
+rpm -q openssl
+rpm -q openssl-devel
+rpm -q popt
+
+
+#创建软链接(使用的是变色的那个)
+ln -s /usr/src/kernels/2.6.32-504.el6.i686 /usr/src/linux
+
+#安装ipvsadm
+wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
+tar -zxvf ipvsadm-1.24.tar.gz
+cd ipvsadm-1.24
+make && make install
+
+
+
+
+
+
+
+
+
+
+http://www.linuxvirtualserver.org/software/ipvs.html#kernel-2.4
+http://blog.itpub.net/29754888/viewspace-1442730/
+http://blog.chinaunix.net/uid-26893610-id-3196774.html
+http://itindex.net/detail/42175-lvs
+
+
+
+
+
