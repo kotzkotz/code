@@ -1,5 +1,17 @@
+#yum -y install gcc
 #apache 2.2
-#yum -y install zlib
+#yum -y install zlib zlib-devel
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/apr/apr-1.5.2.tar.gz
+tar -xzvf apr-1.5.2.tar.gz
+cd apr-1.5.2
+./configure -prefix=/usr/local/apr
+make && make install
+wget http://mirrors.tuna.tsinghua.edu.cn/apache//apr/apr-util-1.5.4.tar.gz
+tar -xzvf apr-util-1.5.4.tar.gz
+cd apr-util-1.5.4
+./configure -prefix=/usr/local/apr-util/ -with-apr=/usr/local/apr
+make && make install
+
 wget http://mirrors.tuna.tsinghua.edu.cn/apache/httpd/httpd-2.2.31.tar.bz2
 tar -jxvf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
@@ -9,7 +21,7 @@ cd httpd-2.2.31
 --enable-mods-shared=all \
 --enable-so \
 --with-apr=/usr/local/apr \
---with-apr-util=/usr/local/web/apr-util
+--with-apr-util=/usr/local/apr-util
 
 #apache 2.4
 #error: APR not found. Please read the documentation
@@ -174,11 +186,7 @@ wget http://cn2.php.net/distributions/php-5.4.33.tar.gz
 tar -xzvf php-5.4.33.tar.gz
 #安装依赖软件
 #rpm -qa | grep freetype
-yum -y install freetype freetype-devel
-yum -y install gd gd-devel
-yum -y install libxml2 libxml2-devel
-yum -y install libjpeg libjpeg-devel
-yum -y install libpng libpng-devel
+yum -y install freetype freetype-devel gd gd-devel libxml2 libxml2-devel libjpeg libjpeg-devel libpng libpng-devel
 
 ./configure --prefix=/usr/local/php \
 --with-apxs2=/usr/local/http2/bin/apxs \
