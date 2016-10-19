@@ -1,0 +1,234 @@
+#yum -y install gcc
+#打开80端口
+vi /etc/sysconfig/iptables
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+/etc/init.d/iptables restart
+#安装apache
+#yum -y install zlib zlib-devel
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/apr/apr-1.5.2.tar.gz
+tar -xzvf apr-1.5.2.tar.gz
+cd apr-1.5.2
+./configure -prefix=/usr/local/apr
+make && make install
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/apr/apr-util-1.5.4.tar.gz
+tar -xzvf apr-util-1.5.4.tar.gz
+cd apr-util-1.5.4
+./configure -prefix=/usr/local/apr-util/ -with-apr=/usr/local/apr
+make && make install
+#apache 2.2
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/httpd/httpd-2.2.31.tar.bz2
+tar -jxvf httpd-2.2.31.tar.bz2
+cd httpd-2.2.31
+./configure --prefix=/usr/local/http2  \
+--enable-modules=all \
+--enable-rewrite \
+--enable-mods-shared=all \
+--enable-so \
+--with-apr=/usr/local/apr \
+--with-apr-util=/usr/local/apr-util
+
+#apache 2.4
+#http://www.cnblogs.com/Anker/p/3355573.html
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/httpd/httpd-2.4.20.tar.bz2
+./configure --prefix=/usr/local/http2  \
+--enable-modules=all \
+--enable-rewrite \
+--enable-mods-shared=all \
+--enable-so \
+--with-apr=/usr/local/apr \
+--with-apr-util=/usr/local/apr-util \
+--with-pcre=/usr/local/pcre 
+
+make && make install
+#拷贝apache配置文件
+cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd.conf.bak
+#启动apache
+/usr/local/http2/bin/apachectl start
+
+#使用service httpd start 
+#复制一下启动文件
+cp /usr/local/http2/bin/apachectl /etc/rc.d/init.d/httpd
+#增加执行权限
+chmod +x /etc/init.d/httpd
+#apache加入开机启动
+打开 vi /etc/rc.d/init.d/httpd 添加(#!/bin/sh下面)
+#chkconfig: 2345 10 90
+#description: Activates/Deactivates Apache Web Server
+ps:#必须有,2345是设为要启动的运行级别，10是启动优先级，90是杀死进程的优先级，谁优先谁先挂的意思。
+
+#增加系统服务
+chkconfig --add httpd 
+#设置运行级别
+chkconfig httpd on
+#重启apache
+service httpd restart
+
+#mysql 5.5
+#查看是否有旧的mysql
+rpm -qa | grep mysql
+#删除旧的mysql
+rpm -e mysql-libs-5.1.73-7.el6.i686
+rpm -e --nodeps mysql-libs-5.1.73-7.el6.i686
+#下载mysql 5.5
+wget http://mirrors.sohu.com/mysql/MySQL-5.5/mysql-5.5.51.tar.gz
+tar -xzvf mysql-5.5.51.tar.gz
+cd mysql-5.5.51
+#mysql 5.5
+#yum -y install cmake
+#yum -y install openssl openssl-devel ncurses ncurses-devel gcc-c++
+cmake -DMYSQL_USER=mysql \
+-DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+-DINSTALL_DATADIR=/usr/local/mysql/data \
+-DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
+-DDEFAULT_CHARSET=utf8  \
+-DDEFAULT_COLLATION=utf8_general_ci \
+-DEXTRA_CHARSETS=all \
+-DWITH_EMBEDDED_SERVER=1 \
+-DENABLED_LOCAL_INFILE=1 \
+-DWITH_MYISAM_STORAGE_ENGINE=1 \
+-DWITH_INNOBASE_STORAGE_ENGINE=1
+
+#出现：“Build files have been written to: /root/package/mysql-5.5.51”表示编译成功
+make && make install
+
+#mysql初始化
+
+#添加mysql用户组
+groupadd mysql
+
+#创建mysql用户并归属于mysql组
+useradd -g mysql mysql
+
+#复制数据库配置文件（my-medium.cnf表示数据量级为中等）
+cp support-files/my-medium.cnf /etc/my.cnf
+#复制启动文件
+cp support-files/mysql.server /etc/init.d/mysqld
+#增加执行权限
+chmod +x /etc/init.d/mysqld
+
+#递归的把当前文件改为root用户跟mysql组
+cd /usr/local/mysql
+chown -R root:mysql .
+chown -R mysql:mysql data
+
+
+#修改 mysql 的配置 my.cnf 
+vi /etc/my.cnf
+#在[mysqld]下面添加 
+basedir = /usr/local/mysql
+datadir = /usr/local/mysql/data
+log-error = /usr/local/mysql/mysql_error.log
+pid-file = /usr/local/mysql/data/mysql.pid
+default-storage-engine=MyISAM
+user = mysql
+
+#创建mysql测试数据库和系统的数据库（正常的是生成5个文件）
+/usr/local/mysql/scripts/mysql_install_db \
+--user=mysql \
+--basedir=/usr/local/mysql \
+--datadir=/usr/local/mysql/data
+
+#启动mysql
+bin/mysqld_safe --user=mysql &
+
+#将 mysql 加入开机启动
+#编辑此文件，查找并修改以下变量内容：
+vi /etc/init.d/mysqld
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+
+#增加系统服务
+chkconfig --add mysqld
+#设置运行级别
+chkconfig --level 345 mysqld on
+
+#为MySQL配置环境变量，以后使用起来方便 
+export PATH=/usr/local/mysql/bin:$PATH
+
+#启动mysql服务
+service mysqld start
+
+#查看mysql是否启动成功
+ps -A | grep mysql
+
+#设置密码
+mysql_secure_installation
+
+#测试数据库
+mysql -u root -p
+show databases;	
+
+
+
+
+#php安装
+wget http://cn2.php.net/distributions/php-5.4.33.tar.gz
+tar -xzvf php-5.4.33.tar.gz
+cd php-5.4.33
+#安装依赖软件
+#rpm -qa | grep freetype
+yum -y install freetype freetype-devel gd gd-devel libxml2 libxml2-devel libjpeg libjpeg-devel libpng libpng-devel
+
+./configure --prefix=/usr/local/php \
+--with-apxs2=/usr/local/http2/bin/apxs \
+--with-mysql=mysqlnd \
+--with-pdo-mysql=mysqlnd \
+--with-mysqli=mysqlnd \
+--with-freetype-dir=/usr/local/freetype \
+--with-gd=/usr/local/gd \
+--with-zlib --with-libxml-dir=/usr/local/libxml2 \
+--with-jpeg-dir=/usr/local/jpeg \
+--with-png-dir \
+--enable-mbstring=all \
+--enable-mbregex \
+--enable-shared
+
+#安装
+make && make install
+
+#复制配置文件
+cp php.ini-development /usr/local/php/lib/php.ini
+
+#如果连接不上数据库则需要配置php.ini中的值，值在数据库中输入status可以在UNIX socket中看到
+pdo_mysql.default_socket=/tmp/mysqld.sock
+mysql.default_socket = /tmp/mysqld.sock
+mysqli.default_socket =/tmp/mysqld.sock
+或者创建软连接
+ln -s /tmp/mysqld.sock /tmp/mysql.sock
+
+#配置apache
+cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd2.conf.bak
+vi /usr/local/http2/conf/httpd.conf
+
+1)引入: "Include conf/extra/httpd-vhosts.conf"
+
+2)增加: "AddType application/x-httpd-php .php"	
+
+3)找到下面这段话:
+<IfModule dir_module>
+    DirectoryIndex index.html
+</IfModule>
+在index.html 前面添加index.php
+
+4)修改根目录
+DocumentRoot "/usr/local/http2/htdocs"
+<Directory "/usr/local/http2/htdocs">
+
+5)注释内部所有行 "extra/httpd-vhosts.conf"
+
+
+4)建立php测试网页
+vi /usr/local/apache2/htdocs/index.php	 
+输入如下内容:
+<?php
+phpinfo();
+?>
+
+5)重启apache
+shell> /usr/local/http2/bin/apachectl restart
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+查看安装语句：
+
+#nginx编译参数： 
+your_nginx_dir/sbin/nginx -v 
+#apache编译参数： 
+cat your_apache_dir/build/config.nice 
+#php编译参数： 
+your_php_dir/bin/php -i | grep configure 
+#mysql编译参数：
+#5.5以前： 
+cat your_mysql_dir/bin/mysqlbug | grep -i configure 
+或者
+VISUAL=vim; export VISUAL
+mysqlbug
+#5.5以后：
+#到mysql编译文件下
+cmake . -LAH
+
+查看配置文件：
+
+#查看apache的配置文件
+ps aux | grep httpd
+your_apache_dir/bin/httpd -V | grep "SERVER_CONFIG_FILE"
+
+#查看nginx的配置文件
+首先执行命令找到nginx路径
+ps aux | grep nginx
+your_nginx_dir/sbin/nginx -V
+默认放在 安装目录下 conf/nginx.conf
+
+#查看mysql的配置文件
+首先执行命令找到mysql路径
+ps aux | grep mysqld
+your_mysql_dir/bin/mysql –verbose –help | grep -A 1 'Default options'
+或
+your_mysql_dir/mysql –print-defaults
+
+#查看php的配置文件
+ps aux | grep php
+（1）phpinfo:Loaded Configuration File
+（2）如果是nginx+php配置，也可以通过查找php执行路径
+ps aux | grep php
+如，路径为 /usr/local/nginx/sbin/php-fpm
+然后执行以下命令
+/usr/local/nginx/sbin/php-fpm -i | grep “Loaded Configuration File”
+即可看到php加载的配置文件
+（3）如果是apache+mod_php配置，也可以在apache配置文件中查看加载的php.ini路径。如 PHPIniDir “/usr/local/apache/conf/php.ini”
+
+
+
+经验法：
+apache：
+配置文件：
+find / -name httpd.conf
+service httpd start 启动
+service httpd restart 重新启动
+service httpd stop 停止服务
+
+
+nginx配置文件：
+find / -name nginx.conf
+停止nginx：nginx -s quit
+开启nginx：/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+
+
+php配置文件：
+find / -name php.ini
+
+
+
+
+mysql配置文件：
+find / -name my.ini -o -name my.cnf
+
+
+
+
+查看端口
+netstat -ntlp | grep 80
+kill 17526
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rpm -ql mysql
+
+
+whereis apache
