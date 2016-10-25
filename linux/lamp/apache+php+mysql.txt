@@ -196,6 +196,7 @@ mysqli.default_socket =/tmp/mysqld.sock
 ln -s /tmp/mysqld.sock /tmp/mysql.sock
 
 #配置apache
+#修改"httpd.conf"配置文件，共4步
 cp /usr/local/http2/conf/httpd.conf /usr/local/http2/conf/httpd2.conf.bak
 vi /usr/local/http2/conf/httpd.conf
 
@@ -213,9 +214,9 @@ vi /usr/local/http2/conf/httpd.conf
 DocumentRoot "/usr/local/http2/htdocs"
 <Directory "/usr/local/http2/htdocs">
 
-5)注释"extra/httpd-vhosts.conf"内部所有行
+#注释"/usr/local/http2/conf/extra/httpd-vhosts.conf"内部所有行
 
-6)建立php测试网页
+#建立php测试网页
 vi /usr/local/apache2/htdocs/index.php	 
 输入如下内容:
 <?php
@@ -224,7 +225,7 @@ var_dump($rs);
 phpinfo();
 ?>
 
-5)重启apache
+#重启apache
 service httpd restart
 
 
