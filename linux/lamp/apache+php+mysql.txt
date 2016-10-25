@@ -1,10 +1,9 @@
-#yum -y install gcc
 #打开80端口
 vi /etc/sysconfig/iptables
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
 /etc/init.d/iptables restart
 #安装apache
-#yum -y install zlib zlib-devel
+#yum -y install gcc zlib zlib-devel
 wget http://mirrors.tuna.tsinghua.edu.cn/apache/apr/apr-1.5.2.tar.gz
 tar -xzvf apr-1.5.2.tar.gz
 cd apr-1.5.2
@@ -57,7 +56,7 @@ chmod +x /etc/init.d/httpd
 ps:#必须有,2345是设为要启动的运行级别，10是启动优先级，90是杀死进程的优先级，谁优先谁先挂的意思。
 
 #增加系统服务
-chkconfig --add httpd 
+chkconfig --add httpd
 #设置运行级别
 chkconfig httpd on
 #重启apache
