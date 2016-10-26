@@ -66,15 +66,13 @@ service httpd restart
 #查看是否有旧的mysql
 rpm -qa | grep mysql
 #删除旧的mysql
-rpm -e mysql-libs-5.1.73-7.el6.i686
 rpm -e --nodeps mysql-libs-5.1.73-7.el6.i686
 #下载mysql 5.5
 wget http://mirrors.sohu.com/mysql/MySQL-5.5/mysql-5.5.51.tar.gz
 tar -xzvf mysql-5.5.51.tar.gz
 cd mysql-5.5.51
 #mysql 5.5
-#yum -y install cmake
-#yum -y install openssl openssl-devel ncurses ncurses-devel gcc-c++
+#yum -y install cmake openssl openssl-devel ncurses ncurses-devel gcc-c++
 cmake -DMYSQL_USER=mysql \
 -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
 -DINSTALL_DATADIR=/usr/local/mysql/data \
