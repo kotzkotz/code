@@ -1,8 +1,15 @@
+#shall报错"-bash: ./realserver.sh: /bin/bash^M: bad interpreter: "没有那个文件或目录
+vim test.sh
+:set ff?
+如果出现fileforma=dos那么就基本可以确定是这个问题了。
+:set fileformat=unix
+:wq
+
 #ipvsadm(lvs)官方网站：http://www.linuxvirtualserver.org/
 #ipvsadm(lvs)中文官网：http://zh.linuxvirtualserver.org/
 #keepalived官方网站：http://www.keepalived.org/
 
-#确认内核支持ipvs
+#确认内核支持ipvs（包含ip_vs.ko）
 modprobe -l | grep ipvs
 
 #安装依赖包
@@ -11,10 +18,13 @@ yum -y install kernel-devel
 #查看依赖包是否存在
 rpm -q kernel-devel gcc gcc-c++ openssl openssl-devel popt popt-devel libnl | grep 'not installed'
 
-#创建软链接(使用的是变色的那个)
-ln -s /usr/src/kernels/2.6.32-504.el6.i686 /usr/src/linux
+#重启
+reboot
 
-#安装ipvsadm，完成负载均衡
+#创建软链接(使用的可以用“modinfo ip_vs”或者“uname -r”查看)
+ln -s /usr/src/kernels/2.6.32-642.1.1.el6.i686 /usr/src/linux
+
+#安装ipvsadm，完成负载均衡，下载对应的版本号"uname -r"
 wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
 tar -zxvf ipvsadm-1.24.tar.gz
 cd ipvsadm-1.24
@@ -22,32 +32,62 @@ make && make install
 #查看ipvsadm的位置
 find / -name ipvsadm
 
+#apache设置
+Listen 80
 
 
 #安装keepalived，完成高可用
 wget http://www.keepalived.org/software/keepalived-1.1.15.tar.gz
 tar -zxvf keepalived-1.1.15.tar.gz
 cd keepalived-1.1.15
-./configure --sysconf=/usr/local/keepalived --with-kernel-dir=/usr/src/kernels/2.6.32-504.el6.i686（也可以直接运行"./configure"）
+./configure --prefix=/usr/local/keepalived --with-kernel-dir=/usr/src/kernels/2.6.32-642.6.2.el6.i686（也可以直接运行"./configure"）
 make && make install
 
 #查看keepalived位置  
 find / -name keepalived
 
+#配置文件的路径
+cp /usr/local/keepalived/etc/rc.d/init.d/keepalived /etc/init.d/
+cp /usr/local/keepalived/etc/sysconfig/keepalived /etc/sysconfig/
+mkdir /etc/keepalived
+cp /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/
+cp /usr/local/keepalived/sbin/keepalived /sbin/
+
 #修改配置文件（find / -name keepalived.conf）
-vi /usr/local/etc/keepalived/keepalived.conf
+vi /etc/keepalived/keepalived.conf
 
 #BACKUP服务器同上配置，先安装lvs再按装keepalived。然后配置“keepalived.conf”，只需将“两处”标明“备份”的部分改一下即可。
 
-#建立服务启动脚本，以便使用service命令控制之 
-cp /usr/local/etc/rc.d/init.d/keepalived /etc/init.d/keepalived
+#配置在主负载均衡服务器上配置keepalived.conf
+vi /usr/local/etc/keepalived/keepalived.conf
 
-#如果报错/etc/sysconfig/keepalived: 没有那个文件或目录
-#cp /usr/local/etc/sysconfig/keepalived /etc/sysconfig/keepalived
-
-#启动keepalived服务，keepalived就能利用keepalived.conf 的配置文件，实现负载均衡和高可用.  整个LVS负均衡HA方案，由keepalived.conf一个文件即可搞定！
+#建立软连接
+ln -s /usr/local/sbin/keepalived /usr/sbin/
+#启动keepalived服务，keepalived就能利用keepalived.conf 的配置文件，实现负载均衡和高可用。整个LVS负均衡HA方案，由keepalived.conf一个文件即可搞定！
 service keepalived start
+#查看keepalived日志
+tail -f /var/log/messages
 
+#允许数据转发
+vi /etc/sysctl.conf
+net.ipv4.ip_forward=1
+
+#立即生效
+sysctl -p
+
+#监听网卡
+tcpdump -i eth0
+
+#监听80端口
+tcpdump port 80
+
+#监听eth0的80端口
+tcpdump -i eth0 tcp port 80
+
+#ipvsadm版本
+ipvsadm -v
+#keepalived版本
+keepalived -v
 
 
 #虚拟IP地址，并设定其子网掩码为255.255.255.255，与Director Server上的虚拟IP保持互通，然后禁止了本机的ARP请求
@@ -58,13 +98,59 @@ rsync -av realserver.sh root@192.168.1.66:/root/
 
 
 
+#清楚记录
+ipvsadm -C
+
+#查看是否启用
+ipvsadm -ln
+Weight：权重
+ActiveConn：活动连接
+InActConn：非活动连接
+
+#查看转发状态
+ipvsadm -lnc
+pro:使用的协议
+expire:连接过期时间
+state:连接状态
+source:客户端地址
+virtual:vip地址
+destination:响应客户端的RS服务器地址
+
+#列出统计数据
+ipvsadm -ln --stats
+Conns：连接数
+InPkts:入站报文 
+OutPkts: 出站响应
+InBytes:入站字节数
+OutBytes:出站字节数
+
+#列出速率
+ipvsadm -ln --rate
+CPS：每秒钟连接数   
+InPPS：每秒钟入站报文数  
+OutPPS：每秒钟出站报文数   
+InBPS：每秒钟入站字节大小  
+OutBPS：每秒钟出站字节大小
+
+#清除计数器
+ipvsadm -Z
+
+#查看路由表缓存
+route -C
+
+#ipvsadm方式添加
+ipvsadm -A -t 192.168.1.67:80 -s wrr -p 600
+以上表示在内核的虚拟服务器列表中添加一条192.168.1.67的虚拟服务器记录，并且指定此虚拟服务器的服务端口为80，然后指定此虚拟服务器的调度策略为甲醛轮询调度，并且在每个real server上的持续服务时间为600秒，即10分钟
+
+#-g:DR模式，-i:TUN模式，-m:NET模式
+ipvsadm -A -t 192.168.1.65:80 -s wrr -p 600
+ipvsadm -a -t 192.168.1.65:80 -r 192.168.1.67:80 -g -w 2
+ipvsadm -a -t 192.168.1.65:80 -r 192.168.1.68:80 -g -w 1
 
 
-
-
-
-
-
+#增加虚拟IP“192.168.1.65”
+ifconfig eth0:0 192.168.1.65 broadcast 192.168.1.65 netmask 255.255.255.255 up
+此处在eth0设备上绑定了一个虚拟设备eth0:0，同时设置了一个虚拟IP是192.168.1.65，也就是上面我们规划的IP地址，然后指定广播地址也为192.168.1.65，需要特别注意的是，这里的子网掩码为255.255.255.255。
 
 
 

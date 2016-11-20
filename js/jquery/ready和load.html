@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>ready和load的区别</title>
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+/*
+参考：
+http://www.jianshu.com/users/EhUmA3/latest_articles
+http://www.imooc.com/code/3253
+
+jQuery有3种针对文档加载的方法：
+$(document).ready(function() {
+    // ...代码...
+})
+//document ready 简写
+$(function() {
+    // ...代码...
+})
+$(document).load(function() {
+    // ...代码...
+})
+
+
+
+DOM文档加载的步骤：
+(1) 解析HTML结构。
+(2) 加载外部脚本和样式表文件。
+(3) 解析并执行脚本代码。
+(4) 构造HTML DOM模型。//ready
+(5) 加载图片等外部文件。
+(6) 页面加载完毕。//load
+ready在第（4）步完成之后就执行了，但是load要在第（6）步完成之后才执行。
+*/
+
+// 原生js（不兼容老的浏览器）
+// DOMContentLoaded
+document.addEventListener("DOMContentLoaded", function() {
+   // ...代码...
+}, false);
+//load
+window.addEventListener("load", function() {
+    // ...代码...
+}, false);
+
+
+
+// jQuery：
+// DOMContentLoaded
+$(document).ready(function() {
+    // ...代码...
+});
+//load
+$(document).load(function() {
+    // ...代码...
+});
+
+/*
+案例：
+*/
+console.log('观察脚本加载的顺序')
+
+document.addEventListener("DOMContentLoaded", function() {
+    console.log('DOMContentLoaded回调')
+}, false);
+
+window.addEventListener("load", function() {
+    console.log('load事件回调')
+}, false);
+
+console.log('脚本解析一')
+
+//测试加载
+$(function(){
+    console.log('脚本解析二')
+})
+
+console.log('脚本解析三')
+
+</script>
+</body>
+</html>

@@ -1,9 +1,9 @@
 #!/bin/bash
 # description: start LVS of DirectorServer
-# 不知道作用
-VIP=172.16.0.250
-RIP1=172.16.0.204
-RIP2=172.16.0.205
+# DR模式在lvs机器运行
+VIP=192.168.0.65
+RIP1=192.168.0.67
+RIP2=192.168.0.68
 . /etc/rc.d/init.d/functions
 logger $0 called with $1
  

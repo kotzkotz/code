@@ -1,3 +1,6 @@
+#与intelnet时间同步
+ntpdate -u time.windows.com
+
 #查看crontab状态
 service crond status
 

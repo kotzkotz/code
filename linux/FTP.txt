@@ -62,6 +62,3 @@ local_umask=002
 
 #重启vsftpd
 service vsftpd restart
-
-#与intelnet时间同步
-ntpdate -u ntp.api.bz(NTP服务器:上海)
