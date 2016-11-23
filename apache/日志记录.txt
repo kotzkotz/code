@@ -1,0 +1,23 @@
+1）只记录html,htm,php等文件
+SetEnvIfNoCase Request_URI "(\.htm|\/|\.html|\.php)$" htm  
+CustomLog logs/9enjoy.com-access_log combined env=htm 
+
+2）排除法：
+<FilesMatch “\.(ico|gif|jpg|png|bmp|swf|js|css)”> 
+SetEnv IMAGE 1  
+</FilesMatch> 
+CustomLog logs/9enjoy.com-access_log combined env=!IMAGE
+
+3）单个网站配置
+vim /usr/local/apache2/conf/extra/httpd-vhosts.conf
+ 
+SetEnvIf Request_URI ".*\.gif$" image-request
+SetEnvIf Request_URI ".*\.jpg$" image-request
+SetEnvIf Request_URI ".*\.png$" image-request
+SetEnvIf Request_URI ".*\.bmp$" image-request
+SetEnvIf Request_URI ".*\.swf$" image-request
+SetEnvIf Request_URI ".*\.js$" image-request
+SetEnvIf Request_URI ".*\.css$" image-request 
+ErrorLog "logs/test.com-error_log"
+CustomLog "|/usr/local/apache2/bin/rotatelogs -l 
+/usr/local/apache2/logs/test.com-access_%Y%m%d_log 86400" combined env=!image-request

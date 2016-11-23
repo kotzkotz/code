@@ -1,3 +1,4 @@
+#一台电脑3个虚拟机测试成功，2台电脑2个虚拟机，DR模式测试失败
 #shall报错"-bash: ./realserver.sh: /bin/bash^M: bad interpreter: "没有那个文件或目录
 vim test.sh
 :set ff?
@@ -43,7 +44,7 @@ cd keepalived-1.1.15
 ./configure --prefix=/usr/local/keepalived --with-kernel-dir=/usr/src/kernels/2.6.32-642.6.2.el6.i686（也可以直接运行"./configure"）
 make && make install
 
-#查看keepalived位置  
+#查看keepalived位置
 find / -name keepalived
 
 #配置文件的路径
@@ -61,14 +62,12 @@ vi /etc/keepalived/keepalived.conf
 #配置在主负载均衡服务器上配置keepalived.conf
 vi /usr/local/etc/keepalived/keepalived.conf
 
-#建立软连接
-ln -s /usr/local/sbin/keepalived /usr/sbin/
 #启动keepalived服务，keepalived就能利用keepalived.conf 的配置文件，实现负载均衡和高可用。整个LVS负均衡HA方案，由keepalived.conf一个文件即可搞定！
 service keepalived start
 #查看keepalived日志
 tail -f /var/log/messages
 
-#允许数据转发
+#DR模式不需要，允许数据转发
 vi /etc/sysctl.conf
 net.ipv4.ip_forward=1
 
@@ -146,21 +145,3 @@ ipvsadm -A -t 192.168.1.67:80 -s wrr -p 600
 ipvsadm -A -t 192.168.1.65:80 -s wrr -p 600
 ipvsadm -a -t 192.168.1.65:80 -r 192.168.1.67:80 -g -w 2
 ipvsadm -a -t 192.168.1.65:80 -r 192.168.1.68:80 -g -w 1
-
-
-#增加虚拟IP“192.168.1.65”
-ifconfig eth0:0 192.168.1.65 broadcast 192.168.1.65 netmask 255.255.255.255 up
-此处在eth0设备上绑定了一个虚拟设备eth0:0，同时设置了一个虚拟IP是192.168.1.65，也就是上面我们规划的IP地址，然后指定广播地址也为192.168.1.65，需要特别注意的是，这里的子网掩码为255.255.255.255。
-
-
-
-
-
-http://blog.itpub.net/29754888/viewspace-1442730/
-http://blog.chinaunix.net/uid-26893610-id-3196774.html
-http://itindex.net/detail/42175-lvs
-
-
-
-
-

@@ -55,9 +55,18 @@ cp post-commit.tmpl post-commit
 vi post-commit
 #在末尾增加
 export LANG=en_US.UTF-8 #防止乱码
-SVN=/usr/bin/svn #这里配置的是svn安装bin目录下的svn文件
-WEB=/home/www/ecshop #项目目录
+SVN=/usr/bin/svn 		#这里配置的是svn安装bin目录下的svn文件
+WEB=/home/www/ecshop	#项目目录
+WEB_USER=www			#apache运行用户组和用户名
 $SVN update $WEB --username woshimima --password woshimima --no-auth-cache
+chown $WEB_USER.$WEB_USER -R $WEB
 
 #增加执行权限
 chmod 777 post-commit
+
+
+#svn常用操作
+cd 你的源码目录
+svn update
+svn cleanup
+svn unlock PATH 

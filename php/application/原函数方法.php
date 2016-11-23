@@ -59,4 +59,51 @@ function zc_dump($so,$class=false){
 	
 }
 
+
+
+/*
+ * debug_backtrace
+ * 功能：产生一条回溯跟踪
+ * 文献：http://php.net/manual/zh/function.debug-backtrace.php
+ */
+// filename: /tmp/a.php
+function a_test($str)
+{
+    echo "\nHi: $str";
+    var_dump(debug_backtrace());
+}
+
+a_test('friend');
+
+// filename: /tmp/b.php
+include_once '/tmp/a.php';
+
+/*
+// 访问/tmp/b.php，等到一下信息
+Hi: friend
+array(2) {
+[0]=>
+array(4) {
+    ["file"] => string(10) "/tmp/a.php"
+    ["line"] => int(10)
+    ["function"] => string(6) "a_test"
+    ["args"]=>
+    array(1) {
+      [0] => &string(6) "friend"
+    }
+}
+[1]=>
+array(4) {
+    ["file"] => string(10) "/tmp/b.php"
+    ["line"] => int(2)
+    ["args"] =>
+    array(1) {
+      [0] => string(10) "/tmp/a.php"
+    }
+    ["function"] => string(12) "include_once"
+  }
+}
+
+*/
+
 ?>
