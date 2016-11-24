@@ -1,0 +1,6 @@
+#打开mysql配置文件，在mysqld下增加“skip-name-resolve”
+[mysqld]
+skip-name-resolve
+
+#如果忘记密码可以增加“skip-grant-tables”，意思是的不启用权限验证，即谁都能登录
+skip-grant-tables

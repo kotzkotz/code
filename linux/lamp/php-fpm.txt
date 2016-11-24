@@ -1,0 +1,19 @@
+#要想使php支持php-fpm，只需要在编译的时候带上 --enable-fpm 就可以了。
+#如果之前没有编译，重新下一份，相同的参数（加上"--enable-fpm"）重新编译。
+
+#复制“php-fpm.conf”
+cd /usr/local/php/etc/
+cp php-fpm.conf.default php-fpm.conf
+
+#配置
+vim php-fpm.conf
+pid = run/php-fpm.pid
+user = www
+group = www
+
+#启动命令
+/usr/local/php/sbin/php-fpm
+
+#开机启动php-fpm：在“/etc/rc.local”最后加入“/usr/local/php/sbin/php-fpm”
+vi /etc/rc.local
+/usr/local/php/sbin/php-fpm

@@ -47,6 +47,9 @@ make && make install
 #查看keepalived位置
 find / -name keepalived
 
+#关闭防火墙
+/etc/init.d/iptables stop
+
 #配置文件的路径
 cp /usr/local/keepalived/etc/rc.d/init.d/keepalived /etc/init.d/
 cp /usr/local/keepalived/etc/sysconfig/keepalived /etc/sysconfig/

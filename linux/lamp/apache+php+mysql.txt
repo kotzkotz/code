@@ -168,6 +168,7 @@ cd php-5.4.33
 yum -y install freetype freetype-devel gd gd-devel libxml2 libxml2-devel libjpeg libjpeg-devel libpng libpng-devel
 
 ./configure --prefix=/usr/local/php \
+--with-config-file-path=/usr/local/php/etc \
 --with-apxs2=/usr/local/http2/bin/apxs \
 --with-mysql=mysqlnd \
 --with-pdo-mysql=mysqlnd \
@@ -179,6 +180,7 @@ yum -y install freetype freetype-devel gd gd-devel libxml2 libxml2-devel libjpeg
 --with-png-dir \
 --enable-mbstring=all \
 --enable-mbregex \
+--enable-fpm \
 --enable-shared
 
 #安装
