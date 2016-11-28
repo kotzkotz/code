@@ -1,0 +1,32 @@
+#启动mongod服务
+./bin/mongod  --port 27017 --dbpath /path/to/database --logpath /path/to/log --fork
+
+--dbpath 数据存储目录
+--logpath 日志存储目录
+--port 运行端口(默认27017)
+--fork 后台进程运行
+--smallfiles 普通3-4G，最小文件启动300-400M, 
+
+#查看帮助
+db.help()
+
+#查看当前的数据库
+show dbs
+
+#选库
+use databaseName
+
+#查看当前库下的collection
+show tables/collections 
+
+#创建库
+Mongodb的库是隐式创建,你可以use 一个不存在的库，然后在该库下创建collection,即可创建库
+
+#创建collection
+db.createCollection('collectionName')
+
+#删除collection
+db.collectionName.drop()
+
+#删除database
+db.dropDatabase()
