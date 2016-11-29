@@ -9,11 +9,25 @@ show stauts like 'com_select'  show stauts like 'com_insert' ...类推 update  d
 
 #show [session|global] status like .... 如果你不写  [session|global] 默认是session 会话，指取出当前窗口的执行，如果你想看所有(从mysql 启动到现在，则应该 global)
 
-show status like 'connections'; 	#显示连接数
-show status like 'slow_queries';	#显示慢查询次数
+show status like 'connections';     	#显示连接数
+show status like 'slow_queries';	    #显示慢查询次数
 #默认情况下，mysql认为10秒才是一个慢查询.
+show variables like '%query%log%';      #查看当前慢查询配置
 show variables like 'long_query_time';	#可以显示当前慢查询时间
-set long_query_time=1;		#可以修改慢查询时间
+
+#修改my.cnf，在“[mysqld]”下面添加
+slow_query_log = ON #开启慢查询日志
+slow_query_log_file = /var/www/log/mysql-slow.log #日志记录位置
+long_query_time = 2 #超过多长时间在记录
+log-queries-not-using-indexes #记录所有没有用上索引全表扫描的语句，就算你的SQL没有超过long_query_time设置的时间。
+
+#设置权限
+chmod 777 /var/www/log
+
+#重启mysql后测试
+select sleep(3);
+
+
 
 #构建大表->大表中记录有要求, 记录是不同才有用，否则测试效果和真实的相差大.
 
@@ -107,25 +121,3 @@ select rand_num()$$		#调用函数
 delimiter ;
 #调用刚刚写好的函数,1800000条记录,从100001号开始
 call insert_emp(100001,4000000);	#调用存储过程
-
-#my.ini 文件中记录的位置
-#Path to the database root
-datadir="C:/Documents and Settings/All Users/Application Data/MySQL/MySQL Server 5.5/Data/"
-
-#如何把慢查询的sql记录到我们的一个日志中
-cd C:\AppServ\MySQL
-#在默认情况下，我们的mysql不会记录慢查询，需要在启动mysql时候，指定记录慢查询才可以
-bin\mysqld.exe --safe-mode  --slow-query-log [mysql5.5 可以在my.ini指定]
-bin\mysqld.exe -log-slow-queries=C:\AppServ\MySQL\data\mcx\abc.log [低版本mysql5.0可以在my.ini指定]
-
-#或者修改my.ini
-slow_query_log=1
-slow_query_log_file = /var/log/mysql/mysql-slow.log
-long_query_time = 2
-log-queries-not-using-indexes
-
-
-
-#先关闭mysql,再启动, 如果启用了慢查询日志，默认把这个文件放在my.ini 文件中记录的位置
-#Path to the database root
-datadir="C:\AppServ/MySQL/data/"
