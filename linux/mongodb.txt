@@ -1,32 +1,51 @@
+#查看硬盘使用情况
+df -lh
+
+#到mongodb官网下载：http://www.mongodb.org/downloads
+wget https://fastdl.mongodb.org/linux/mongodb-linux-i686-3.2.11.tgz
+
+#解压
+tar -zxvf mongodb-linux-i686-3.2.11.tgz
+
+#将解压包拷贝到指定目录
+mv mongodb-linux-x86_64-3.0.6/ /usr/local/mongodb
+
 #启动mongod服务
-./bin/mongod  --port 27017 --dbpath /path/to/database --logpath /path/to/log --fork
+./mongod --nojournal --port=27017 --dbpath=/data/db/ --logpath=/data/log/mongodb.log --storageEngine=mmapv1 --fork --auth
 
---dbpath 数据存储目录
---logpath 日志存储目录
---port 运行端口(默认27017)
---fork 后台进程运行
---smallfiles 普通3-4G，最小文件启动300-400M, 
+--storageEngine=mmapv1 指定storage engine（32位不指定可能会出问题）
+--nojournal 针对32位
+--port 端口，默认：27017
+--dbpath 数据位置
+--logpath 日志位置
+--fork 后台运行
+--auth 开启权限认证
+--smallfiles 普通3-4G，最小文件启动300-400M
 
-#查看帮助
-db.help()
+#查看是否启动
+netstat -ntpl
+ps aux | grep mongodb
 
-#查看当前的数据库
-show dbs
+#连接mongodb
+./mongo localhost
+./mongo localhost:27017/admin -ureanod -preanod6688
 
-#选库
-use databaseName
+#添加超级用户
+use admin
+db.createUser({user: "root",pwd: "123456",roles: [{role: "userAdminAnyDatabase",db: "admin"}]})
+db.createUser({user: 'zckop',pwd: '123456',roles: [{role: 'root',db: 'admin'}]})
 
-#查看当前库下的collection
-show tables/collections 
+#添加普通用户,切换到当前目录，如：xinxiangmu
+use xinxiangmu
+db.createUser({user:'zckop',pwd:'123456',roles:[{role:'readWrite',db: 'xinxiangmu'}]})
 
-#创建库
-Mongodb的库是隐式创建,你可以use 一个不存在的库，然后在该库下创建collection,即可创建库
+#登录或者切换用户
+db.auth("zckop","123456")
 
-#创建collection
-db.createCollection('collectionName')
+#停止服务
+use admin
+db.shutdownServer()
 
-#删除collection
-db.collectionName.drop()
-
-#删除database
-db.dropDatabase()
+#开机启动
+vi /etc/rc.local
+/www/wdlinux/mongodb/bin/mongod --nojournal --port=27017 --dbpath=/data/db/ --logpath=/data/log/mongodb.log --storageEngine=mmapv1 --fork --auth

@@ -33,7 +33,7 @@ tar zxvf memcache-2.2.7.tgz
 #php扩展源码安装包是没有configure文件的
 cd memcache-2.2.7
 #在源码包目录根据当前php的版本动态的创建扩展的configure文件
-/usr/local/php/bin/phpize --with-php-config=/usr/local/php/bin/php-config
+/usr/local/php/bin/phpize
 #配置
 ./configure -with-php-config=/usr/local/php/bin/php-config
 #安装

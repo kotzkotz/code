@@ -1,0 +1,32 @@
+参考：“http://ls-la.me/2015/07/29/mongo-04/”，“http://www.runoob.com/mongodb/mongodb-install-php-driver.html”
+
+#查看帮助
+db.help()
+
+#查看当前的数据库
+show dbs
+
+#选库（选择“test”库）
+use test
+
+#查看当前库下的collection（类似mysql的表）
+show tables/collections 
+
+#创建库
+Mongodb的库是隐式创建,你可以use 一个不存在的库，然后在该库下创建collection,即可创建库
+
+#创建collection
+db.createCollection('collectionName')
+
+#删除collection
+db.collectionName.drop()
+
+#删除database
+use test
+db.dropDatabase()
+
+#查看数据表
+db.collectionName.find()
+
+#删除某条记录
+db.system.users.remove({"user":"reanod"})

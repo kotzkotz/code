@@ -61,3 +61,7 @@ crontab -r
 */5 * * * * /bin/echo "11" >> /tmp/test
 5 5 * * 2 /sbin/shutdown -r now
 0 5 1,10,15 * * /root/sh/autobak.sh
+
+
+https://typecodes.com/linux/applogsbackup.html
+https://github.com/vfhky/mylnmp
