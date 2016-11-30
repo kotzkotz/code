@@ -1,0 +1,85 @@
+#logrotate，参考：https://linux.cn/article-4126-1.html，http://huoding.com/2013/04/21/246
+
+#简介
+Logrotate是基于CRON（计划任务）运行的，所以执行时间是由CRON控制的，具体可以查询CRON的配置文件“/etc/crontab”新版“/etc/anacrontab”，可以手动修改执行时间。
+可以使用“postrotate”或“endscript”来通知软件重新打开日志文件，但每个软件打开的方式不一样，如：nginx通过USR1信号，MySQL是通过flush-logs来重新打开日志文件的，然而有的应用程序压根就没有提供类似的方法，如果想重新打开日志文件，就必须重启服务，但为了高可用性，这往往不能接受。所以建议使用使用“copytruncate”指令，此方法采用的是先拷贝再清空的方式，整个过程中日志文件的操作句柄没有发生改变，所以不需要通知应用程序重新打开日志文件，但是需要注意的是，在拷贝和清空之间有一个时间差，所以可能会丢失部分日志数据。
+
+#logrotate是linux自带的系统日志的管理工具，位置在“/usr/sbin/logrotate”
+find / -name 'logrotate'
+
+#主配置文件（不建议修改）
+cat /etc/logrotate.conf
+
+#个人配置文件“/etc/logrotate.d”下面
+cd /etc/logrotate.d
+
+#个人配置
+vi zckop
+
+#添加一下内容
+/usr/local/http2/logs/access_log
+/usr/local/http2/logs/error_log
+/usr/local/mysql/mysql_error.log
+/var/www/log/*.log
+{
+	weekly
+    dateext
+    notifempty
+    compress
+    missingok
+    delaycompress
+    rotate 60
+    sharedscripts
+    copytruncate
+}
+
+#参数说明
+monthly: 日志文件将按月轮循。其它可用值为‘daily’，‘weekly’或者‘yearly’。
+rotate 5: 一次将存储5个归档日志。对于第六个归档，时间最久的归档将被删除。
+compress: 在轮循任务完成后，已轮循的归档将使用gzip进行压缩。
+delaycompress: 总是与compress选项一起用，delaycompress选项指示logrotate不要将最近的归档压缩，压缩将在下一次轮循周期进行。这在你或任何软件仍然需要读取最新归档时很有用。
+missingok: 在日志轮循期间，任何错误将被忽略，例如“文件无法找到”之类的错误。
+notifempty: 如果日志文件为空，轮循不会进行。
+create 644 root root: 以指定的权限创建全新的日志文件，同时logrotate也会重命名原始日志文件。
+postrotate/endscript: 在所有其它指令完成后，postrotate和endscript里面指定的命令将被执行。在这种情况下，rsyslogd 进程将立即再次读取其配置并继续运行。
+copytruncate: 先拷贝再清空
+sharedscripts: 在所有的日志文件都轮转完毕后统一执行一次脚本。如果没有配置这条指令，那么每个日志文件轮转完毕后都会执行一次脚本
+dateext：旧日志文件以创建日期命名
+
+
+
+
+#通过debug测试
+logrotate -d -f /etc/logrotate.d/zckop
+
+#立即执行
+logrotate -f /etc/logrotate.d/nginx
+
+
+#查看计划任务
+
+
+
+
+#cronolog
+#简介
+cronolog 是一个简单的过滤程序，读取日志文件条目从标准输入和输出的每个条目并写入指定的日志文件的文件名模板和当前的日期和时间。当扩展文件名的变化，目前的文件是关闭，新开辟的。cronolog旨在和一个Web服务器一起使用，如Apache，分割访问日志为每天或每月的日志。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
