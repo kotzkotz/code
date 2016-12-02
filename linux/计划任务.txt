@@ -10,8 +10,14 @@ yum install -y vixie-cron
 #看是否设置了开机自动启动
 chkconfig --list crond
 
+#crontab与anacrontab简析
+crontab可以精确到分，但是错过之后就不会执行了，直到下次该执行时。
+anacrontab每天每月每周执行一个程序，如果错过了，会在N(可设置)后重启。配置文件：/etc/anaconrtab
+
 #编辑任务调度指令：
-crontab -e
+用户：crontab -e
+系统：vi /etc/crontab
+
 #格式：* * * * * 执行的任务，如：
 0 5 1,10,15 * * /root/sh/autobak.sh
 
@@ -62,6 +68,11 @@ crontab -r
 5 5 * * 2 /sbin/shutdown -r now
 0 5 1,10,15 * * /root/sh/autobak.sh
 
+#crontab日志
+cd /var/log/
+
+#anacrontab当天执行过的日志
+ll /var/spool/cron
 
 https://typecodes.com/linux/applogsbackup.html
 https://github.com/vfhky/mylnmp

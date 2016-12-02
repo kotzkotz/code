@@ -16,18 +16,18 @@ cd /etc/logrotate.d
 #个人配置
 vi zckop
 
-#添加一下内容
+#添加以下内容
 /usr/local/http2/logs/access_log
 /usr/local/http2/logs/error_log
 /usr/local/mysql/mysql_error.log
 /var/www/log/*.log
 {
-	weekly
+    weekly
     dateext
     notifempty
     compress
-    missingok
     delaycompress
+    missingok
     rotate 60
     sharedscripts
     copytruncate
@@ -48,16 +48,26 @@ dateext：旧日志文件以创建日期命名
 
 
 
-
-#通过debug测试
-logrotate -d -f /etc/logrotate.d/zckop
+#通过debug测试(-d是debug测试,-f是强制执行（不安配置的执行间隔，如果为空还是不执行）)
+logrotate -d /etc/logrotate.d/zckop
 
 #立即执行
-logrotate -f /etc/logrotate.d/nginx
+logrotate -f /etc/logrotate.d/zckop
+
+#测试全部定时分割任务
+logrotate -d /etc/logrotate.conf
 
 
-#查看计划任务
 
+#如果不执行，可以修改以下内容强制执行
+mv /etc/cron.daily/logrotate /etc/cron.hourly/
+
+#添加到计划任务
+crontab -e
+15 * * * * /usr/sbin/logrotate /etc/logrotate.conf
+
+#重启定时服务
+/etc/init.d/crond restart
 
 
 
